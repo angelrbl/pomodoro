@@ -89,6 +89,51 @@
       --bar-rest: #C8896A;
     }
 
+    /* Blanco (pure light) */
+    [data-theme="blanco"] {
+      --bg: #FFFFFF;
+      --bg2: #F7F7F7;
+      --surface: #F0F0F0;
+      --border: rgba(0,0,0,0.09);
+      --text-primary: #111111;
+      --text-secondary: #777777;
+      --text-muted: #BBBBBB;
+      --accent-soft: rgba(0,0,0,0.04);
+      --bar-track: rgba(0,0,0,0.08);
+      --bar-fill: #222222;
+      --bar-rest: #888888;
+    }
+
+    /* Negro (dark grey) */
+    [data-theme="negro"] {
+      --bg: #2A2A2A;
+      --bg2: #323232;
+      --surface: #3C3C3C;
+      --border: rgba(255,255,255,0.09);
+      --text-primary: #EBEBEB;
+      --text-secondary: #909090;
+      --text-muted: #585858;
+      --accent-soft: rgba(255,255,255,0.06);
+      --bar-track: rgba(255,255,255,0.10);
+      --bar-fill: #C8C8C8;
+      --bar-rest: #707070;
+    }
+
+    /* Rojo (warm red light) */
+    [data-theme="rojo"] {
+      --bg: #F7EDED;
+      --bg2: #F0E0E0;
+      --surface: #E8D0D0;
+      --border: rgba(160,40,30,0.13);
+      --text-primary: #2A0A0A;
+      --text-secondary: #A04040;
+      --text-muted: #D09090;
+      --accent-soft: rgba(180,40,30,0.07);
+      --bar-track: rgba(180,40,30,0.12);
+      --bar-fill: #C82020;
+      --bar-rest: #D07070;
+    }
+
     /* ═══════════════════════════════════════
        BASE
     ═══════════════════════════════════════ */
@@ -150,6 +195,9 @@
     .theme-dot[data-t="musgo"]   { background: #5A8C50; }
     .theme-dot[data-t="noche"]   { background: #8A85C0; }
     .theme-dot[data-t="durazno"] { background: #C07855; }
+    .theme-dot[data-t="blanco"]  { background: #E8E8E8; border: 2px solid #CCCCCC; }
+    .theme-dot[data-t="negro"]   { background: #1A1A1A; }
+    .theme-dot[data-t="rojo"]    { background: #C02010; }
 
     .theme-label {
       font-family: var(--font-sans);
@@ -386,22 +434,19 @@
       height: 3px;
       margin-bottom: 2.4rem;
       border-radius: 100px;
-      overflow: hidden;
       background: var(--bar-track);
     }
 
-    .progress-left, .progress-right {
+    /* Single bar centered: shrinks equally from left AND right end */
+    .progress-bar {
       position: absolute;
       top: 0;
       height: 100%;
       background: var(--bar-fill);
       border-radius: 100px;
-      transition: width 0.9s linear, background 0.5s;
-      width: 50%;
+      /* left & width controlled by JS so it stays centered while shrinking */
+      transition: left 0.9s linear, width 0.9s linear, background 0.5s;
     }
-
-    .progress-left  { left: 0; transform-origin: left; }
-    .progress-right { right: 0; transform-origin: right; }
 
     /* ── QUICK ADJUST ── */
     .quick-adjust {
@@ -577,6 +622,9 @@
   <div class="theme-dot"        data-t="musgo"   title="Musgo"></div>
   <div class="theme-dot"        data-t="noche"   title="Noche"></div>
   <div class="theme-dot"        data-t="durazno" title="Durazno"></div>
+  <div class="theme-dot"        data-t="blanco"  title="Blanco"></div>
+  <div class="theme-dot"        data-t="negro"   title="Negro"></div>
+  <div class="theme-dot"        data-t="rojo"    title="Rojo"></div>
 </div>
 
 <!-- SETUP SCREEN -->
@@ -638,8 +686,7 @@
   </div>
 
   <div class="progress-wrap" id="progress-wrap">
-    <div class="progress-left"  id="prog-left"></div>
-    <div class="progress-right" id="prog-right"></div>
+    <div class="progress-bar" id="prog-bar"></div>
   </div>
 
   <div class="quick-adjust">
@@ -732,8 +779,7 @@
   const phaseLabel   = document.getElementById('phase-label');
   const timeDisplay  = document.getElementById('time-display');
   const timeInput    = document.getElementById('time-input');
-  const progLeft     = document.getElementById('prog-left');
-  const progRight    = document.getElementById('prog-right');
+  const progBar      = document.getElementById('prog-bar');
   const cyclesRow    = document.getElementById('cycles-row');
   const playIcon     = document.getElementById('play-icon');
   const pauseIcon    = document.getElementById('pause-icon');
@@ -794,12 +840,14 @@
   });
 
   /* ══════════════════════════════════════
-     PROGRESS BAR — shrinks from both sides
+     PROGRESS BAR — shrinks from outer ends inward
   ══════════════════════════════════════ */
   function updateBar(ratio) {
-    const pct = Math.max(0, Math.min(1, ratio)) * 50;
-    progLeft.style.width  = pct + '%';
-    progRight.style.width = pct + '%';
+    const r = Math.max(0, Math.min(1, ratio));
+    const pct = r * 100;
+    const offset = (100 - pct) / 2;
+    progBar.style.left  = offset + '%';
+    progBar.style.width = pct + '%';
   }
 
   /* ══════════════════════════════════════
@@ -827,8 +875,7 @@
   ══════════════════════════════════════ */
   function applyPhaseStyle(phase) {
     const isRest = phase === 'rest';
-    progLeft.style.background  = isRest ? 'var(--bar-rest)' : 'var(--bar-fill)';
-    progRight.style.background = isRest ? 'var(--bar-rest)' : 'var(--bar-fill)';
+    progBar.style.background = isRest ? 'var(--bar-rest)' : 'var(--bar-fill)';
   }
 
   /* ══════════════════════════════════════
