@@ -159,9 +159,7 @@
       transition: background 0.5s, color 0.5s;
     }
 
-    /* ═══════════════════════════════════════
-       THEME PICKER (bottom bar)
-    ═══════════════════════════════════════ */
+    /* THEME PICKER */
     .theme-bar {
       position: fixed;
       bottom: 1.5rem;
@@ -173,8 +171,26 @@
       background: var(--surface);
       border: 1px solid var(--border);
       border-radius: 100px;
-      padding: 7px 14px;
+      padding: 0 14px;
+      height: 36px;
       z-index: 50;
+      transition: background 0.5s, border-color 0.5s;
+    }
+
+    .theme-dots {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      overflow: hidden;
+      max-width: 0;
+      opacity: 0;
+      transition: max-width 0.4s ease, opacity 0.3s ease;
+    }
+
+    .theme-bar:hover .theme-dots,
+    .theme-bar.open .theme-dots {
+      max-width: 300px;
+      opacity: 1;
     }
 
     .theme-dot {
@@ -196,7 +212,7 @@
     .theme-dot[data-t="noche"]   { background: #8A85C0; }
     .theme-dot[data-t="durazno"] { background: #C07855; }
     .theme-dot[data-t="blanco"]  { background: #E8E8E8; border: 2px solid #CCCCCC; }
-    .theme-dot[data-t="negro"]   { background: #1A1A1A; }
+    .theme-dot[data-t="negro"]   { background: #3A3A3A; }
     .theme-dot[data-t="rojo"]    { background: #C02010; }
 
     .theme-label {
@@ -205,7 +221,13 @@
       color: var(--text-muted);
       letter-spacing: 0.06em;
       text-transform: uppercase;
-      padding-right: 4px;
+      cursor: default;
+      user-select: none;
+      transition: color 0.5s;
+      white-space: nowrap;
+      line-height: 1;
+      display: flex;
+      align-items: center;
     }
 
     /* ═══════════════════════════════════════
@@ -222,12 +244,12 @@
 
     .setup-title {
       font-family: var(--font);
-      font-size: 13px;
-      font-weight: 600;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: var(--text-muted);
-      margin-bottom: 2.8rem;
+      font-size: clamp(42px, 12vw, 64px);
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      color: var(--text-primary);
+      margin-bottom: 2.2rem;
+      line-height: 1;
     }
 
     .setup-fields {
@@ -606,6 +628,37 @@
       transform: translateX(-50%) translateY(0);
     }
 
+    /* ═══════════════════════════════════════
+       RESPONSIVE
+    ═══════════════════════════════════════ */
+    @media (max-width: 480px) {
+      body { padding: 1.5rem 1rem 5rem; justify-content: flex-start; padding-top: 3rem; }
+
+      #setup-screen { max-width: 100%; }
+      .setup-field { padding: 16px 16px; }
+
+      #timer-screen { max-width: 100%; }
+      .phase-label { margin-bottom: 2rem; }
+
+      .timer-block { margin-bottom: 1.2rem; }
+
+      .progress-wrap { max-width: 100%; margin-bottom: 1.8rem; }
+
+      .quick-adjust { gap: 4px; margin-bottom: 2rem; }
+      .qa-btn { padding: 0 9px; font-size: 11px; height: 28px; }
+
+      .controls { margin-bottom: 2rem; }
+
+      .theme-bar { bottom: 1rem; padding: 6px 12px; }
+      .theme-dot { width: 18px; height: 18px; }
+
+      #done-screen { max-width: 100%; }
+    }
+
+    @media (max-width: 360px) {
+      .qa-btn { padding: 0 7px; font-size: 10px; }
+    }
+
     @keyframes fadeUp {
       from { opacity: 0; transform: translateY(10px); }
       to   { opacity: 1; transform: translateY(0); }
@@ -615,16 +668,18 @@
 <body data-theme="papel">
 
 <!-- THEME BAR -->
-<div class="theme-bar">
+<div class="theme-bar" id="theme-bar">
   <span class="theme-label">tema</span>
-  <div class="theme-dot active" data-t="papel"   title="Papel"></div>
-  <div class="theme-dot"        data-t="lluvia"  title="Lluvia"></div>
-  <div class="theme-dot"        data-t="musgo"   title="Musgo"></div>
-  <div class="theme-dot"        data-t="noche"   title="Noche"></div>
-  <div class="theme-dot"        data-t="durazno" title="Durazno"></div>
-  <div class="theme-dot"        data-t="blanco"  title="Blanco"></div>
-  <div class="theme-dot"        data-t="negro"   title="Negro"></div>
-  <div class="theme-dot"        data-t="rojo"    title="Rojo"></div>
+  <div class="theme-dots">
+    <div class="theme-dot active" data-t="papel"   title="Papel"></div>
+    <div class="theme-dot"        data-t="lluvia"  title="Lluvia"></div>
+    <div class="theme-dot"        data-t="musgo"   title="Musgo"></div>
+    <div class="theme-dot"        data-t="noche"   title="Noche"></div>
+    <div class="theme-dot"        data-t="durazno" title="Durazno"></div>
+    <div class="theme-dot"        data-t="blanco"  title="Blanco"></div>
+    <div class="theme-dot"        data-t="negro"   title="Negro"></div>
+    <div class="theme-dot"        data-t="rojo"    title="Rojo"></div>
+  </div>
 </div>
 
 <!-- SETUP SCREEN -->
@@ -968,7 +1023,7 @@
     doneScreen.style.display  = 'flex';
     const total = CFG.work * CFG.cycles;
     doneSub.textContent = `${CFG.cycles} ciclos · ${total} min de trabajo · ¡Buen trabajo!`;
-    notify('¡Sesión completada!');
+    notify('¡Sesión completada!', 'work');
   }
 
   /* ══════════════════════════════════════
@@ -976,7 +1031,8 @@
   ══════════════════════════════════════ */
   function tick() {
     if (remainSecs <= 0) {
-      notify(currentPhase === 'work' ? '¡Tiempo de trabajo terminado!' : '¡Descanso terminado!');
+      notify(currentPhase === 'work' ? '¡Tiempo de trabajo terminado!' : '¡Descanso terminado!',
+             currentPhase === 'work' ? 'work' : 'rest');
       nextPhase();
       return;
     }
@@ -1103,9 +1159,55 @@
   }
 
   /* ══════════════════════════════════════
+     SOUND — Web Audio API beep
+  ══════════════════════════════════════ */
+  function playBeep(type) {
+    try {
+      const ctx = new (window.AudioContext || window.webkitAudioContext)();
+      const master = ctx.createGain();
+      master.gain.setValueAtTime(0, ctx.currentTime);
+      master.connect(ctx.destination);
+
+      if (type === 'work') {
+        // Three short ascending tones — "time's up, go rest"
+        [[440, 0.00], [554, 0.18], [659, 0.36]].forEach(([freq, delay]) => {
+          const osc = ctx.createOscillator();
+          const env = ctx.createGain();
+          osc.type = 'sine';
+          osc.frequency.value = freq;
+          env.gain.setValueAtTime(0, ctx.currentTime + delay);
+          env.gain.linearRampToValueAtTime(0.28, ctx.currentTime + delay + 0.02);
+          env.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + delay + 0.35);
+          osc.connect(env);
+          env.connect(master);
+          osc.start(ctx.currentTime + delay);
+          osc.stop(ctx.currentTime + delay + 0.4);
+        });
+        setTimeout(() => ctx.close(), 1200);
+      } else {
+        // One soft low tone — "break's over"
+        const osc = ctx.createOscillator();
+        const env = ctx.createGain();
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(330, ctx.currentTime);
+        osc.frequency.linearRampToValueAtTime(440, ctx.currentTime + 0.3);
+        env.gain.setValueAtTime(0, ctx.currentTime);
+        env.gain.linearRampToValueAtTime(0.30, ctx.currentTime + 0.03);
+        env.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.7);
+        osc.connect(env);
+        env.connect(master);
+        osc.start(ctx.currentTime);
+        osc.stop(ctx.currentTime + 0.8);
+        setTimeout(() => ctx.close(), 1000);
+      }
+    } catch(e) {}
+  }
+
+  /* ══════════════════════════════════════
      NOTIFICATIONS
   ══════════════════════════════════════ */
-  function notify(msg) {
+  function notify(msg, soundType) {
+    playBeep(soundType || 'work');
     if ('Notification' in window && Notification.permission === 'granted') {
       new Notification('Pomodoro', { body: msg });
     } else if ('Notification' in window && Notification.permission !== 'denied') {
@@ -1114,6 +1216,17 @@
       });
     }
   }
+
+  /* ══════════════════════════════════════
+     THEME BAR — touch toggle for mobile
+  ══════════════════════════════════════ */
+  const themeBar = document.getElementById('theme-bar');
+  themeBar.addEventListener('touchstart', e => {
+    if (!e.target.classList.contains('theme-dot')) {
+      themeBar.classList.toggle('open');
+      e.preventDefault();
+    }
+  }, { passive: false });
 
   /* ══════════════════════════════════════
      INIT
