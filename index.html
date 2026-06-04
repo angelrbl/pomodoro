@@ -6,48 +6,103 @@
   <title>Pomodoro</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Nunito+Sans:wght@300;400;600&display=swap" rel="stylesheet" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
+    /* ═══════════════════════════════════════
+       THEMES
+    ═══════════════════════════════════════ */
+
+    /* Default: Papel (warm parchment) */
+    [data-theme="papel"] {
+      --bg: #F5F0E8;
+      --bg2: #EDE7D9;
+      --surface: #E8E0CE;
+      --border: rgba(80,60,30,0.12);
+      --text-primary: #2C2415;
+      --text-secondary: #8C7A5E;
+      --text-muted: #B8A98A;
+      --accent-soft: rgba(44,36,21,0.06);
+      --bar-track: rgba(44,36,21,0.10);
+      --bar-fill: #7B6245;
+      --bar-rest: #9B8B72;
+    }
+
+    /* Lluvia (rainy blue-grey) */
+    [data-theme="lluvia"] {
+      --bg: #EAECF0;
+      --bg2: #E0E3E9;
+      --surface: #D6DAE2;
+      --border: rgba(50,60,90,0.12);
+      --text-primary: #1E2535;
+      --text-secondary: #6B7590;
+      --text-muted: #A0AABF;
+      --accent-soft: rgba(30,37,53,0.06);
+      --bar-track: rgba(30,37,53,0.10);
+      --bar-fill: #4E6080;
+      --bar-rest: #7A90B0;
+    }
+
+    /* Musgo (deep forest green) */
+    [data-theme="musgo"] {
+      --bg: #E8EDE5;
+      --bg2: #DDE5D8;
+      --surface: #CDD8C6;
+      --border: rgba(30,55,30,0.12);
+      --text-primary: #1A2E18;
+      --text-secondary: #5E7A58;
+      --text-muted: #94AE8E;
+      --accent-soft: rgba(26,46,24,0.06);
+      --bar-track: rgba(26,46,24,0.10);
+      --bar-fill: #4A7040;
+      --bar-rest: #7A9E72;
+    }
+
+    /* Noche (soft dark) */
+    [data-theme="noche"] {
+      --bg: #1C1B22;
+      --bg2: #242330;
+      --surface: #2E2D3A;
+      --border: rgba(200,195,230,0.10);
+      --text-primary: #E8E5F5;
+      --text-secondary: #8A87A8;
+      --text-muted: #55527A;
+      --accent-soft: rgba(232,229,245,0.06);
+      --bar-track: rgba(232,229,245,0.10);
+      --bar-fill: #9A95C8;
+      --bar-rest: #6B6895;
+    }
+
+    /* Durazno (warm peach-pink) */
+    [data-theme="durazno"] {
+      --bg: #F5ECE5;
+      --bg2: #EEE2D8;
+      --surface: #E5D4C5;
+      --border: rgba(100,50,30,0.12);
+      --text-primary: #2E1A10;
+      --text-secondary: #9A6B55;
+      --text-muted: #C4997F;
+      --accent-soft: rgba(46,26,16,0.06);
+      --bar-track: rgba(46,26,16,0.10);
+      --bar-fill: #B06040;
+      --bar-rest: #C8896A;
+    }
+
+    /* ═══════════════════════════════════════
+       BASE
+    ═══════════════════════════════════════ */
     :root {
-      --bg: #F7F5F0;
-      --surface: #EFECE5;
-      --border: rgba(0,0,0,0.10);
-      --text-primary: #1A1915;
-      --text-secondary: #8A8780;
-      --text-muted: #B8B5B0;
-      --accent: #1A1915;
-      --accent-soft: rgba(26,25,21,0.06);
-      --danger: #C94545;
-      --success: #3A7A52;
-      --radius: 16px;
-      --radius-sm: 8px;
-      --font-mono: 'DM Mono', monospace;
-      --font-sans: 'DM Sans', sans-serif;
+      --radius: 18px;
+      --radius-sm: 10px;
+      --font: 'Nunito', sans-serif;
+      --font-sans: 'Nunito Sans', sans-serif;
     }
 
-    @media (prefers-color-scheme: dark) {
-      :root {
-        --bg: #141412;
-        --surface: #1E1D1A;
-        --border: rgba(255,255,255,0.08);
-        --text-primary: #F0EDE6;
-        --text-secondary: #7A7872;
-        --text-muted: #4A4845;
-        --accent: #F0EDE6;
-        --accent-soft: rgba(240,237,230,0.06);
-        --danger: #E06060;
-        --success: #5AAA78;
-      }
-    }
-
-    html, body {
-      height: 100%;
-    }
+    html, body { height: 100%; }
 
     body {
-      font-family: var(--font-sans);
+      font-family: var(--font);
       background: var(--bg);
       color: var(--text-primary);
       display: flex;
@@ -55,38 +110,87 @@
       align-items: center;
       justify-content: center;
       min-height: 100vh;
-      padding: 2rem 1rem;
-      transition: background 0.3s;
+      padding: 2rem 1rem 5rem;
+      transition: background 0.5s, color 0.5s;
     }
 
-    /* ── SETUP SCREEN ── */
+    /* ═══════════════════════════════════════
+       THEME PICKER (bottom bar)
+    ═══════════════════════════════════════ */
+    .theme-bar {
+      position: fixed;
+      bottom: 1.5rem;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 100px;
+      padding: 7px 14px;
+      z-index: 50;
+    }
+
+    .theme-dot {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      cursor: pointer;
+      border: 2px solid transparent;
+      transition: transform 0.15s, border-color 0.2s;
+      flex-shrink: 0;
+    }
+
+    .theme-dot:hover { transform: scale(1.2); }
+    .theme-dot.active { border-color: var(--text-primary); transform: scale(1.15); }
+
+    .theme-dot[data-t="papel"]   { background: #C4A97A; }
+    .theme-dot[data-t="lluvia"]  { background: #7090B8; }
+    .theme-dot[data-t="musgo"]   { background: #5A8C50; }
+    .theme-dot[data-t="noche"]   { background: #8A85C0; }
+    .theme-dot[data-t="durazno"] { background: #C07855; }
+
+    .theme-label {
+      font-family: var(--font-sans);
+      font-size: 11px;
+      color: var(--text-muted);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      padding-right: 4px;
+    }
+
+    /* ═══════════════════════════════════════
+       SETUP SCREEN
+    ═══════════════════════════════════════ */
     #setup-screen {
       width: 100%;
-      max-width: 380px;
+      max-width: 400px;
       display: flex;
       flex-direction: column;
-      gap: 0;
-      animation: fadeIn 0.4s ease;
+      align-items: center;
+      animation: fadeUp 0.4s ease;
     }
 
     .setup-title {
-      font-family: var(--font-mono);
+      font-family: var(--font);
       font-size: 13px;
-      font-weight: 400;
-      letter-spacing: 0.12em;
+      font-weight: 600;
+      letter-spacing: 0.18em;
       text-transform: uppercase;
       color: var(--text-muted);
-      text-align: center;
-      margin-bottom: 2.5rem;
+      margin-bottom: 2.8rem;
     }
 
     .setup-fields {
+      width: 100%;
       display: flex;
       flex-direction: column;
       gap: 2px;
       background: var(--border);
       border-radius: var(--radius);
       overflow: hidden;
+      margin-bottom: 1.5rem;
     }
 
     .setup-field {
@@ -94,16 +198,17 @@
       align-items: center;
       justify-content: space-between;
       background: var(--surface);
-      padding: 18px 20px;
+      padding: 20px 22px;
       gap: 16px;
+      transition: background 0.3s;
     }
 
     .setup-field:first-child { border-radius: var(--radius) var(--radius) 0 0; }
     .setup-field:last-child  { border-radius: 0 0 var(--radius) var(--radius); }
 
     .setup-label {
-      font-size: 14px;
-      font-weight: 400;
+      font-size: 15px;
+      font-weight: 600;
       color: var(--text-secondary);
       flex: 1;
     }
@@ -111,19 +216,21 @@
     .setup-label span {
       display: block;
       font-size: 11px;
+      font-weight: 400;
       color: var(--text-muted);
-      margin-top: 1px;
+      margin-top: 2px;
     }
 
-    .setup-stepper {
+    /* inline-editable value in setup */
+    .setup-val-wrap {
       display: flex;
       align-items: center;
       gap: 10px;
     }
 
     .stepper-btn {
-      width: 28px;
-      height: 28px;
+      width: 30px;
+      height: 30px;
       border: 1px solid var(--border);
       background: var(--bg);
       border-radius: 50%;
@@ -131,7 +238,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 16px;
+      font-size: 17px;
       color: var(--text-secondary);
       line-height: 1;
       transition: background 0.15s, color 0.15s;
@@ -140,190 +247,196 @@
     }
 
     .stepper-btn:hover { background: var(--accent-soft); color: var(--text-primary); }
-    .stepper-btn:active { transform: scale(0.93); }
+    .stepper-btn:active { transform: scale(0.92); }
 
-    .stepper-val {
-      font-family: var(--font-mono);
-      font-size: 18px;
-      font-weight: 500;
+    .setup-editable {
+      font-family: var(--font);
+      font-size: 22px;
+      font-weight: 800;
       color: var(--text-primary);
-      min-width: 36px;
+      min-width: 40px;
       text-align: center;
+      cursor: pointer;
+      border-radius: 6px;
+      padding: 2px 6px;
+      transition: background 0.15s;
+    }
+
+    .setup-editable:hover { background: var(--accent-soft); }
+
+    .setup-input {
+      font-family: var(--font);
+      font-size: 22px;
+      font-weight: 800;
+      color: var(--text-primary);
+      background: var(--accent-soft);
+      border: none;
+      outline: none;
+      border-radius: 6px;
+      padding: 2px 6px;
+      width: 56px;
+      text-align: center;
+      display: none;
+      caret-color: var(--text-primary);
     }
 
     .start-btn {
-      margin-top: 20px;
       width: 100%;
-      padding: 16px;
-      background: var(--text-primary);
-      color: var(--bg);
+      padding: 17px;
+      background: var(--bar-fill);
+      color: #fff;
       border: none;
       border-radius: var(--radius);
-      font-family: var(--font-sans);
-      font-size: 14px;
-      font-weight: 500;
-      letter-spacing: 0.05em;
+      font-family: var(--font);
+      font-size: 15px;
+      font-weight: 700;
+      letter-spacing: 0.04em;
       cursor: pointer;
-      transition: opacity 0.15s, transform 0.15s;
+      transition: opacity 0.15s, transform 0.15s, background 0.5s;
     }
 
-    .start-btn:hover { opacity: 0.85; }
+    .start-btn:hover { opacity: 0.88; }
     .start-btn:active { transform: scale(0.98); }
 
-    /* ── TIMER SCREEN ── */
+    /* ═══════════════════════════════════════
+       TIMER SCREEN
+    ═══════════════════════════════════════ */
     #timer-screen {
       width: 100%;
-      max-width: 480px;
+      max-width: 520px;
       display: none;
       flex-direction: column;
       align-items: center;
-      gap: 0;
-      animation: fadeIn 0.4s ease;
+      animation: fadeUp 0.4s ease;
     }
 
     .phase-label {
-      font-family: var(--font-mono);
-      font-size: 11px;
-      font-weight: 400;
-      letter-spacing: 0.16em;
+      font-family: var(--font-sans);
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.18em;
       text-transform: uppercase;
       color: var(--text-muted);
-      margin-bottom: 2.5rem;
+      margin-bottom: 3rem;
       transition: color 0.3s;
     }
 
-    /* progress arc */
-    .progress-ring-wrap {
-      position: relative;
-      width: 280px;
-      height: 280px;
-      margin-bottom: 2.8rem;
-    }
-
-    @media (min-width: 480px) {
-      .progress-ring-wrap { width: 340px; height: 340px; }
-    }
-
-    .progress-svg {
-      position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      transform: rotate(-90deg);
-    }
-
-    .progress-track {
-      fill: none;
-      stroke: var(--surface);
-      stroke-width: 2;
-    }
-
-    .progress-fill {
-      fill: none;
-      stroke: var(--text-primary);
-      stroke-width: 2;
-      stroke-linecap: round;
-      transition: stroke-dashoffset 0.9s linear, stroke 0.3s;
-    }
-
-    .timer-center {
-      position: absolute;
-      inset: 0;
+    /* ── BIG TIME ── */
+    .timer-block {
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: center;
+      width: 100%;
+      margin-bottom: 1.6rem;
     }
 
-    /* editable time display */
     .time-display {
-      font-family: var(--font-mono);
-      font-size: clamp(52px, 14vw, 76px);
-      font-weight: 300;
+      font-family: var(--font);
+      font-size: clamp(86px, 22vw, 130px);
+      font-weight: 800;
       color: var(--text-primary);
-      letter-spacing: -0.02em;
+      letter-spacing: -0.03em;
       line-height: 1;
       cursor: pointer;
       border-radius: var(--radius-sm);
-      padding: 4px 8px;
-      transition: background 0.15s;
+      padding: 4px 10px;
+      transition: background 0.15s, color 0.5s;
       user-select: none;
     }
 
     .time-display:hover { background: var(--accent-soft); }
 
     .time-input {
-      font-family: var(--font-mono);
-      font-size: clamp(52px, 14vw, 76px);
-      font-weight: 300;
+      font-family: var(--font);
+      font-size: clamp(86px, 22vw, 130px);
+      font-weight: 800;
       color: var(--text-primary);
-      letter-spacing: -0.02em;
+      letter-spacing: -0.03em;
       line-height: 1;
       background: var(--accent-soft);
       border: none;
       border-radius: var(--radius-sm);
       outline: none;
       text-align: center;
-      width: 220px;
-      padding: 4px 8px;
+      width: clamp(260px, 70vw, 420px);
+      padding: 4px 10px;
       display: none;
       caret-color: var(--text-primary);
-    }
-
-    @media (min-width: 480px) {
-      .time-input { width: 270px; }
+      transition: color 0.5s;
     }
 
     .edit-hint {
       font-size: 11px;
       color: var(--text-muted);
-      margin-top: 4px;
-      font-family: var(--font-mono);
-      letter-spacing: 0.05em;
+      margin-top: 6px;
+      font-family: var(--font-sans);
+      letter-spacing: 0.06em;
       opacity: 0;
       transition: opacity 0.2s;
+      height: 16px;
     }
 
-    .progress-ring-wrap:hover .edit-hint { opacity: 1; }
+    .timer-block:hover .edit-hint { opacity: 1; }
 
-    /* quick adjust buttons */
+    /* ── PROGRESS BAR ── */
+    .progress-wrap {
+      width: 100%;
+      max-width: 400px;
+      position: relative;
+      height: 3px;
+      margin-bottom: 2.4rem;
+      border-radius: 100px;
+      overflow: hidden;
+      background: var(--bar-track);
+    }
+
+    .progress-left, .progress-right {
+      position: absolute;
+      top: 0;
+      height: 100%;
+      background: var(--bar-fill);
+      border-radius: 100px;
+      transition: width 0.9s linear, background 0.5s;
+      width: 50%;
+    }
+
+    .progress-left  { left: 0; transform-origin: left; }
+    .progress-right { right: 0; transform-origin: right; }
+
+    /* ── QUICK ADJUST ── */
     .quick-adjust {
       display: flex;
       align-items: center;
       gap: 6px;
-      margin-bottom: 2.8rem;
+      margin-bottom: 2.6rem;
     }
 
     .qa-btn {
-      height: 28px;
-      padding: 0 10px;
+      height: 30px;
+      padding: 0 12px;
       border: 1px solid var(--border);
       background: var(--surface);
       border-radius: 100px;
-      font-family: var(--font-mono);
+      font-family: var(--font);
       font-size: 12px;
-      font-weight: 400;
+      font-weight: 600;
       color: var(--text-secondary);
       cursor: pointer;
-      transition: background 0.15s, color 0.15s;
+      transition: background 0.15s, color 0.15s, border-color 0.5s;
       white-space: nowrap;
     }
 
     .qa-btn:hover { background: var(--accent-soft); color: var(--text-primary); }
     .qa-btn:active { transform: scale(0.95); }
 
-    .qa-sep {
-      width: 1px;
-      height: 14px;
-      background: var(--border);
-    }
+    .qa-sep { width: 1px; height: 14px; background: var(--border); }
 
-    /* controls */
+    /* ── CONTROLS ── */
     .controls {
       display: flex;
       align-items: center;
-      gap: 12px;
-      margin-bottom: 3rem;
+      gap: 14px;
+      margin-bottom: 2.8rem;
     }
 
     .ctrl-btn {
@@ -334,7 +447,7 @@
       background: var(--surface);
       border-radius: 50%;
       cursor: pointer;
-      transition: background 0.15s, color 0.15s, transform 0.15s;
+      transition: background 0.15s, color 0.15s, transform 0.15s, border-color 0.5s;
       color: var(--text-secondary);
     }
 
@@ -342,95 +455,102 @@
     .ctrl-btn:active { transform: scale(0.93); }
 
     .ctrl-btn.primary {
-      width: 56px;
-      height: 56px;
-      background: var(--text-primary);
-      color: var(--bg);
+      width: 58px;
+      height: 58px;
+      background: var(--bar-fill);
+      color: #fff;
       border-color: transparent;
+      transition: opacity 0.15s, background 0.5s;
     }
 
-    .ctrl-btn.primary:hover { opacity: 0.85; background: var(--text-primary); }
+    .ctrl-btn.primary:hover { opacity: 0.85; background: var(--bar-fill); }
+    .ctrl-btn.secondary { width: 42px; height: 42px; }
 
-    .ctrl-btn.secondary { width: 40px; height: 40px; }
-
-    /* SVG icons */
-    .ctrl-btn svg { pointer-events: none; }
-
-    /* cycles indicator */
+    /* ── CYCLES ── */
     .cycles-row {
       display: flex;
       align-items: center;
-      gap: 6px;
+      gap: 7px;
     }
 
     .cycle-dot {
-      width: 6px;
-      height: 6px;
+      width: 7px;
+      height: 7px;
       border-radius: 50%;
-      background: var(--text-muted);
-      transition: background 0.3s;
+      background: var(--bar-track);
+      transition: background 0.3s, transform 0.3s;
     }
 
-    .cycle-dot.done { background: var(--text-primary); }
-    .cycle-dot.rest { background: var(--text-secondary); }
+    .cycle-dot.done { background: var(--bar-fill); }
+    .cycle-dot.active { background: var(--bar-fill); transform: scale(1.4); }
+    .cycle-dot.rest { background: var(--bar-rest); transform: scale(1.2); }
 
-    /* ── COMPLETION ── */
+    /* ═══════════════════════════════════════
+       DONE SCREEN
+    ═══════════════════════════════════════ */
     #done-screen {
       width: 100%;
-      max-width: 380px;
+      max-width: 400px;
       display: none;
       flex-direction: column;
       align-items: center;
-      gap: 0;
       text-align: center;
-      animation: fadeIn 0.5s ease;
+      animation: fadeUp 0.5s ease;
+    }
+
+    .done-emoji {
+      font-size: 48px;
+      margin-bottom: 1rem;
     }
 
     .done-title {
-      font-family: var(--font-mono);
-      font-size: 48px;
-      font-weight: 300;
-      letter-spacing: -0.03em;
+      font-family: var(--font);
+      font-size: 40px;
+      font-weight: 800;
       color: var(--text-primary);
       margin-bottom: 8px;
     }
 
     .done-sub {
       font-size: 14px;
+      font-weight: 400;
       color: var(--text-secondary);
       margin-bottom: 2.5rem;
+      line-height: 1.6;
     }
 
     .done-btn {
-      padding: 14px 32px;
-      background: var(--text-primary);
-      color: var(--bg);
+      padding: 15px 36px;
+      background: var(--bar-fill);
+      color: #fff;
       border: none;
       border-radius: var(--radius);
-      font-family: var(--font-sans);
+      font-family: var(--font);
       font-size: 14px;
-      font-weight: 500;
+      font-weight: 700;
       cursor: pointer;
-      transition: opacity 0.15s;
+      transition: opacity 0.15s, background 0.5s;
     }
 
-    .done-btn:hover { opacity: 0.8; }
+    .done-btn:hover { opacity: 0.85; }
 
-    /* ── NOTIFICATIONS ── */
+    /* ═══════════════════════════════════════
+       TOAST
+    ═══════════════════════════════════════ */
     .toast {
       position: fixed;
-      bottom: 2rem;
+      bottom: 5.5rem;
       left: 50%;
       transform: translateX(-50%) translateY(8px);
       background: var(--text-primary);
       color: var(--bg);
-      font-family: var(--font-mono);
-      font-size: 12px;
-      letter-spacing: 0.08em;
-      padding: 10px 20px;
+      font-family: var(--font);
+      font-size: 13px;
+      font-weight: 600;
+      padding: 10px 22px;
       border-radius: 100px;
       opacity: 0;
-      transition: opacity 0.25s, transform 0.25s;
+      transition: opacity 0.25s, transform 0.25s, background 0.5s, color 0.5s;
       pointer-events: none;
       white-space: nowrap;
       z-index: 100;
@@ -441,51 +561,68 @@
       transform: translateX(-50%) translateY(0);
     }
 
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(6px); }
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(10px); }
       to   { opacity: 1; transform: translateY(0); }
     }
   </style>
 </head>
-<body>
+<body data-theme="papel">
+
+<!-- THEME BAR -->
+<div class="theme-bar">
+  <span class="theme-label">tema</span>
+  <div class="theme-dot active" data-t="papel"   title="Papel"></div>
+  <div class="theme-dot"        data-t="lluvia"  title="Lluvia"></div>
+  <div class="theme-dot"        data-t="musgo"   title="Musgo"></div>
+  <div class="theme-dot"        data-t="noche"   title="Noche"></div>
+  <div class="theme-dot"        data-t="durazno" title="Durazno"></div>
+</div>
 
 <!-- SETUP SCREEN -->
 <section id="setup-screen">
   <p class="setup-title">Pomodoro</p>
   <div class="setup-fields">
+
     <div class="setup-field">
       <div class="setup-label">
         Trabajo
-        <span>minutos por sesión</span>
+        <span>minutos de estudio</span>
       </div>
-      <div class="setup-stepper">
+      <div class="setup-val-wrap">
         <button class="stepper-btn" data-target="work" data-dir="-1">−</button>
-        <span class="stepper-val" id="work-val">25</span>
+        <span class="setup-editable" id="work-disp" data-key="work">25</span>
+        <input class="setup-input"  id="work-inp"  type="text" maxlength="3" value="25" />
         <button class="stepper-btn" data-target="work" data-dir="1">+</button>
       </div>
     </div>
+
     <div class="setup-field">
       <div class="setup-label">
         Descanso
-        <span>minutos por pausa</span>
+        <span>minutos de pausa</span>
       </div>
-      <div class="setup-stepper">
+      <div class="setup-val-wrap">
         <button class="stepper-btn" data-target="rest" data-dir="-1">−</button>
-        <span class="stepper-val" id="rest-val">5</span>
+        <span class="setup-editable" id="rest-disp" data-key="rest">5</span>
+        <input class="setup-input"  id="rest-inp"  type="text" maxlength="3" value="5" />
         <button class="stepper-btn" data-target="rest" data-dir="1">+</button>
       </div>
     </div>
+
     <div class="setup-field">
       <div class="setup-label">
         Ciclos
         <span>trabajo + descanso</span>
       </div>
-      <div class="setup-stepper">
+      <div class="setup-val-wrap">
         <button class="stepper-btn" data-target="cycles" data-dir="-1">−</button>
-        <span class="stepper-val" id="cycles-val">4</span>
+        <span class="setup-editable" id="cycles-disp" data-key="cycles">4</span>
+        <input class="setup-input"  id="cycles-inp"  type="text" maxlength="2" value="4" />
         <button class="stepper-btn" data-target="cycles" data-dir="1">+</button>
       </div>
     </div>
+
   </div>
   <button class="start-btn" id="start-btn">Comenzar</button>
 </section>
@@ -494,16 +631,15 @@
 <section id="timer-screen">
   <p class="phase-label" id="phase-label">Trabajo · Ciclo 1</p>
 
-  <div class="progress-ring-wrap" id="ring-wrap">
-    <svg class="progress-svg" viewBox="0 0 100 100" id="progress-svg">
-      <circle class="progress-track" cx="50" cy="50" r="46"/>
-      <circle class="progress-fill" cx="50" cy="50" r="46" id="progress-fill"/>
-    </svg>
-    <div class="timer-center">
-      <span class="time-display" id="time-display" title="Clic para editar">00:00</span>
-      <input class="time-input" id="time-input" type="text" maxlength="5" placeholder="mm:ss" />
-      <span class="edit-hint">clic para editar</span>
-    </div>
+  <div class="timer-block" id="timer-block">
+    <span class="time-display" id="time-display">00:00</span>
+    <input class="time-input"  id="time-input" type="text" maxlength="5" placeholder="mm:ss" />
+    <span class="edit-hint">toca para editar</span>
+  </div>
+
+  <div class="progress-wrap" id="progress-wrap">
+    <div class="progress-left"  id="prog-left"></div>
+    <div class="progress-right" id="prog-right"></div>
   </div>
 
   <div class="quick-adjust">
@@ -515,28 +651,20 @@
   </div>
 
   <div class="controls">
-    <!-- Skip back -->
     <button class="ctrl-btn secondary" id="btn-restart" title="Reiniciar sesión">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
         <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/>
         <path d="M3 3v5h5"/>
       </svg>
     </button>
 
-    <!-- Play / Pause -->
     <button class="ctrl-btn primary" id="btn-play" title="Iniciar / Pausar">
-      <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" id="play-icon">
-        <polygon points="5,3 19,12 5,21"/>
-      </svg>
-      <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" id="pause-icon" style="display:none">
-        <rect x="6" y="4" width="4" height="16" rx="1"/>
-        <rect x="14" y="4" width="4" height="16" rx="1"/>
-      </svg>
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" id="play-icon"><polygon points="6,3 20,12 6,21"/></svg>
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" id="pause-icon" style="display:none"><rect x="5" y="4" width="4" height="16" rx="1.5"/><rect x="15" y="4" width="4" height="16" rx="1.5"/></svg>
     </button>
 
-    <!-- Skip next -->
     <button class="ctrl-btn secondary" id="btn-skip" title="Saltar sesión">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
         <polygon points="5,4 15,12 5,20"/>
         <line x1="19" y1="5" x2="19" y2="19"/>
       </svg>
@@ -548,6 +676,7 @@
 
 <!-- DONE SCREEN -->
 <section id="done-screen">
+  <div class="done-emoji">🌿</div>
   <p class="done-title">¡Listo!</p>
   <p class="done-sub" id="done-sub">Has completado todos tus ciclos.</p>
   <button class="done-btn" id="done-btn">Nueva sesión</button>
@@ -556,97 +685,164 @@
 <div class="toast" id="toast"></div>
 
 <script>
-  /* ── STATE ── */
+  /* ══════════════════════════════════════
+     THEME
+  ══════════════════════════════════════ */
+  const body = document.body;
+  const THEME_KEY = 'pomo-theme';
+  let currentTheme = localStorage.getItem(THEME_KEY) || 'papel';
+
+  function applyTheme(t) {
+    body.setAttribute('data-theme', t);
+    currentTheme = t;
+    localStorage.setItem(THEME_KEY, t);
+    document.querySelectorAll('.theme-dot').forEach(d => {
+      d.classList.toggle('active', d.dataset.t === t);
+    });
+    // keep bar-fill color synced on play button
+    syncAccentColor();
+  }
+
+  document.querySelectorAll('.theme-dot').forEach(d => {
+    d.addEventListener('click', () => applyTheme(d.dataset.t));
+  });
+
+  applyTheme(currentTheme);
+
+  function syncAccentColor() {
+    // bar-fill is a CSS var so buttons that use it auto-update
+  }
+
+  /* ══════════════════════════════════════
+     STATE
+  ══════════════════════════════════════ */
   const CFG = { work: 25, rest: 5, cycles: 4 };
+  const LIMITS = { work: [1, 90], rest: [1, 30], cycles: [1, 12] };
+
   let totalSecs = 0, remainSecs = 0, intervalId = null, running = false;
   let currentPhase = 'work', currentCycle = 1, phaseSecs = 0;
   let editing = false;
 
-  /* ── ELEMENTS ── */
+  /* ══════════════════════════════════════
+     ELEMENTS
+  ══════════════════════════════════════ */
   const setupScreen  = document.getElementById('setup-screen');
   const timerScreen  = document.getElementById('timer-screen');
   const doneScreen   = document.getElementById('done-screen');
   const phaseLabel   = document.getElementById('phase-label');
   const timeDisplay  = document.getElementById('time-display');
   const timeInput    = document.getElementById('time-input');
-  const progressFill = document.getElementById('progress-fill');
-  const progressSvg  = document.getElementById('progress-svg');
+  const progLeft     = document.getElementById('prog-left');
+  const progRight    = document.getElementById('prog-right');
   const cyclesRow    = document.getElementById('cycles-row');
   const playIcon     = document.getElementById('play-icon');
   const pauseIcon    = document.getElementById('pause-icon');
   const toast        = document.getElementById('toast');
   const doneSub      = document.getElementById('done-sub');
 
-  /* ── SETUP STEPPERS ── */
-  const LIMITS = { work: [1, 90], rest: [1, 30], cycles: [1, 12] };
+  /* ══════════════════════════════════════
+     SETUP — inline editable values
+  ══════════════════════════════════════ */
+  function syncSetupDisplay(key) {
+    document.getElementById(key + '-disp').textContent = CFG[key];
+    document.getElementById(key + '-inp').value = CFG[key];
+  }
+
+  // Stepper buttons
   document.querySelectorAll('.stepper-btn').forEach(btn => {
     btn.addEventListener('click', () => {
       const key = btn.dataset.target;
       const dir = parseInt(btn.dataset.dir);
       CFG[key] = Math.min(LIMITS[key][1], Math.max(LIMITS[key][0], CFG[key] + dir));
-      document.getElementById(key + '-val').textContent = CFG[key];
+      syncSetupDisplay(key);
     });
   });
 
-  document.getElementById('start-btn').addEventListener('click', startSession);
+  // Click on displayed value → show input
+  document.querySelectorAll('.setup-editable').forEach(span => {
+    span.addEventListener('click', () => {
+      const key = span.dataset.key;
+      const inp = document.getElementById(key + '-inp');
+      span.style.display = 'none';
+      inp.style.display = 'block';
+      inp.value = CFG[key];
+      inp.focus();
+      inp.select();
+    });
+  });
 
-  /* ── PROGRESS RING ── */
-  const CIRC = 2 * Math.PI * 46;
-  progressFill.style.strokeDasharray = CIRC;
-  progressFill.style.strokeDashoffset = 0;
-
-  function updateRing(ratio) {
-    const offset = CIRC * (1 - Math.max(0, Math.min(1, ratio)));
-    progressFill.style.strokeDashoffset = offset;
+  // Commit setup input
+  function commitSetupInput(key) {
+    const inp = document.getElementById(key + '-inp');
+    const disp = document.getElementById(key + '-disp');
+    const val = parseInt(inp.value);
+    if (!isNaN(val) && val >= LIMITS[key][0] && val <= LIMITS[key][1]) {
+      CFG[key] = val;
+    }
+    syncSetupDisplay(key);
+    inp.style.display = 'none';
+    disp.style.display = 'inline';
   }
 
-  /* ── RESPONSIVE RING SIZE ── */
-  function setRingViewBox() {
-    const w = progressSvg.clientWidth;
-    progressFill.style.transition = 'none';
+  ['work','rest','cycles'].forEach(key => {
+    const inp = document.getElementById(key + '-inp');
+    inp.addEventListener('keydown', e => {
+      if (e.key === 'Enter' || e.key === 'Tab') { e.preventDefault(); commitSetupInput(key); }
+      if (e.key === 'Escape') commitSetupInput(key);
+    });
+    inp.addEventListener('blur', () => commitSetupInput(key));
+  });
+
+  /* ══════════════════════════════════════
+     PROGRESS BAR — shrinks from both sides
+  ══════════════════════════════════════ */
+  function updateBar(ratio) {
+    const pct = Math.max(0, Math.min(1, ratio)) * 50;
+    progLeft.style.width  = pct + '%';
+    progRight.style.width = pct + '%';
   }
 
-  /* ── TIME FORMATTING ── */
+  /* ══════════════════════════════════════
+     TIME FORMAT
+  ══════════════════════════════════════ */
   function fmtTime(s) {
     const m = Math.floor(s / 60);
     const sec = s % 60;
-    return String(m).padStart(2, '0') + ':' + String(sec).padStart(2, '0');
+    return String(m).padStart(2,'0') + ':' + String(sec).padStart(2,'0');
   }
 
   function parseTimeInput(str) {
-    const clean = str.replace(/[^0-9:]/g, '');
+    const clean = str.replace(/[^0-9:]/g,'');
     if (clean.includes(':')) {
-      const [m, s] = clean.split(':');
-      const mins = parseInt(m) || 0;
-      const secs = parseInt(s) || 0;
-      return mins * 60 + Math.min(59, secs);
+      const [m,s] = clean.split(':');
+      return (parseInt(m)||0)*60 + Math.min(59, parseInt(s)||0);
     }
-    if (clean.length <= 2) return (parseInt(clean) || 0) * 60;
-    if (clean.length === 3) return parseInt(clean[0]) * 60 + parseInt(clean.slice(1));
-    if (clean.length === 4) return parseInt(clean.slice(0,2)) * 60 + parseInt(clean.slice(2));
-    return null;
+    if (clean.length <= 2) return (parseInt(clean)||0)*60;
+    if (clean.length === 3) return parseInt(clean[0])*60 + parseInt(clean.slice(1));
+    return parseInt(clean.slice(0,2))*60 + parseInt(clean.slice(2));
   }
 
-  /* ── PHASE COLORS ── */
+  /* ══════════════════════════════════════
+     PHASE STYLE
+  ══════════════════════════════════════ */
   function applyPhaseStyle(phase) {
-    if (phase === 'rest') {
-      progressFill.style.stroke = 'var(--text-secondary)';
-    } else {
-      progressFill.style.stroke = 'var(--text-primary)';
-    }
+    const isRest = phase === 'rest';
+    progLeft.style.background  = isRest ? 'var(--bar-rest)' : 'var(--bar-fill)';
+    progRight.style.background = isRest ? 'var(--bar-rest)' : 'var(--bar-fill)';
   }
 
-  /* ── CYCLE DOTS ── */
+  /* ══════════════════════════════════════
+     CYCLE DOTS
+  ══════════════════════════════════════ */
   function buildDots() {
     cyclesRow.innerHTML = '';
     for (let i = 1; i <= CFG.cycles; i++) {
       const dot = document.createElement('div');
       dot.className = 'cycle-dot';
       dot.id = 'dot-' + i;
-      if (i < currentCycle) dot.classList.add('done');
-      else if (i === currentCycle && currentPhase === 'rest') dot.classList.add('rest');
       cyclesRow.appendChild(dot);
     }
+    updateDots();
   }
 
   function updateDots() {
@@ -656,51 +852,61 @@
       dot.className = 'cycle-dot';
       if (i < currentCycle) dot.classList.add('done');
       else if (i === currentCycle && currentPhase === 'rest') dot.classList.add('rest');
+      else if (i === currentCycle) dot.classList.add('active');
     }
   }
 
-  /* ── SESSION INIT ── */
+  /* ══════════════════════════════════════
+     SESSION START — auto-begins
+  ══════════════════════════════════════ */
   function startSession() {
     currentPhase = 'work';
     currentCycle = 1;
-    phaseSecs = CFG.work * 60;
-    remainSecs = phaseSecs;
-    totalSecs = phaseSecs;
+    phaseSecs    = CFG.work * 60;
+    remainSecs   = phaseSecs;
+    totalSecs    = phaseSecs;
 
     setupScreen.style.display = 'none';
-    doneScreen.style.display = 'none';
+    doneScreen.style.display  = 'none';
     timerScreen.style.display = 'flex';
 
     buildDots();
     applyPhaseStyle('work');
     updateDisplay();
     updatePhaseLabel();
-    updateRing(1);
+    updateBar(1);
+
+    // auto-start
+    running = true;
+    playIcon.style.display  = 'none';
+    pauseIcon.style.display = 'block';
+    intervalId = setInterval(tick, 1000);
   }
 
-  /* ── PHASE TRANSITIONS ── */
+  document.getElementById('start-btn').addEventListener('click', startSession);
+
+  /* ══════════════════════════════════════
+     PHASE TRANSITIONS
+  ══════════════════════════════════════ */
   function nextPhase() {
     if (currentPhase === 'work') {
-      if (currentCycle >= CFG.cycles) {
-        endSession();
-        return;
-      }
+      if (currentCycle >= CFG.cycles) { endSession(); return; }
       currentPhase = 'rest';
-      phaseSecs = CFG.rest * 60;
+      phaseSecs    = CFG.rest * 60;
       showToast('¡Descanso!');
     } else {
       currentCycle++;
       currentPhase = 'work';
-      phaseSecs = CFG.work * 60;
+      phaseSecs    = CFG.work * 60;
       showToast('¡A trabajar!');
     }
     remainSecs = phaseSecs;
-    totalSecs = phaseSecs;
+    totalSecs  = phaseSecs;
     applyPhaseStyle(currentPhase);
     updatePhaseLabel();
     updateDots();
     updateDisplay();
-    updateRing(1);
+    updateBar(1);
 
     if (running) {
       clearInterval(intervalId);
@@ -712,13 +918,15 @@
     clearInterval(intervalId);
     running = false;
     timerScreen.style.display = 'none';
-    doneScreen.style.display = 'flex';
+    doneScreen.style.display  = 'flex';
     const total = CFG.work * CFG.cycles;
     doneSub.textContent = `${CFG.cycles} ciclos · ${total} min de trabajo · ¡Buen trabajo!`;
     notify('¡Sesión completada!');
   }
 
-  /* ── TICK ── */
+  /* ══════════════════════════════════════
+     TICK
+  ══════════════════════════════════════ */
   function tick() {
     if (remainSecs <= 0) {
       notify(currentPhase === 'work' ? '¡Tiempo de trabajo terminado!' : '¡Descanso terminado!');
@@ -727,10 +935,9 @@
     }
     remainSecs--;
     updateDisplay();
-    updateRing(remainSecs / totalSecs);
+    updateBar(remainSecs / totalSecs);
   }
 
-  /* ── DISPLAY ── */
   function updateDisplay() {
     if (!editing) timeDisplay.textContent = fmtTime(remainSecs);
   }
@@ -740,22 +947,23 @@
     phaseLabel.textContent = `${phase} · Ciclo ${currentCycle}`;
   }
 
-  /* ── PLAY / PAUSE ── */
+  /* ══════════════════════════════════════
+     PLAY / PAUSE
+  ══════════════════════════════════════ */
   document.getElementById('btn-play').addEventListener('click', togglePlay);
 
   function togglePlay() {
     if (editing) commitEdit();
     running = !running;
-    playIcon.style.display  = running ? 'none' : 'block';
+    playIcon.style.display  = running ? 'none'  : 'block';
     pauseIcon.style.display = running ? 'block' : 'none';
-    if (running) {
-      intervalId = setInterval(tick, 1000);
-    } else {
-      clearInterval(intervalId);
-    }
+    if (running) intervalId = setInterval(tick, 1000);
+    else clearInterval(intervalId);
   }
 
-  /* ── RESTART ── */
+  /* ══════════════════════════════════════
+     RESTART / SKIP
+  ══════════════════════════════════════ */
   document.getElementById('btn-restart').addEventListener('click', () => {
     if (editing) cancelEdit();
     clearInterval(intervalId);
@@ -765,10 +973,9 @@
     remainSecs = phaseSecs;
     totalSecs  = phaseSecs;
     updateDisplay();
-    updateRing(1);
+    updateBar(1);
   });
 
-  /* ── SKIP ── */
   document.getElementById('btn-skip').addEventListener('click', () => {
     if (editing) cancelEdit();
     clearInterval(intervalId);
@@ -777,28 +984,30 @@
     if (running) intervalId = setInterval(tick, 1000);
   });
 
-  /* ── QUICK ADJUST ── */
+  /* ══════════════════════════════════════
+     QUICK ADJUST
+  ══════════════════════════════════════ */
   document.querySelectorAll('.qa-btn').forEach(btn => {
     btn.addEventListener('click', () => {
       if (editing) cancelEdit();
       const delta = parseInt(btn.dataset.adjust);
       remainSecs = Math.max(1, Math.min(5999, remainSecs + delta));
-      if (delta > totalSecs - remainSecs) totalSecs = remainSecs;
       if (remainSecs > totalSecs) totalSecs = remainSecs;
       updateDisplay();
-      updateRing(remainSecs / totalSecs);
-      const sign = delta > 0 ? '+' : '';
-      showToast(sign + (delta / 60) + ' min');
+      updateBar(remainSecs / totalSecs);
+      showToast((delta > 0 ? '+' : '') + (delta / 60) + ' min');
     });
   });
 
-  /* ── INLINE EDIT ── */
+  /* ══════════════════════════════════════
+     INLINE EDIT (timer)
+  ══════════════════════════════════════ */
   timeDisplay.addEventListener('click', startEdit);
 
   function startEdit() {
     editing = true;
     timeDisplay.style.display = 'none';
-    timeInput.style.display = 'block';
+    timeInput.style.display   = 'block';
     timeInput.value = fmtTime(remainSecs);
     timeInput.focus();
     timeInput.select();
@@ -809,7 +1018,7 @@
     if (secs !== null && secs > 0) {
       remainSecs = Math.min(5999, secs);
       if (remainSecs > totalSecs) totalSecs = remainSecs;
-      updateRing(remainSecs / totalSecs);
+      updateBar(remainSecs / totalSecs);
     }
     cancelEdit();
     updateDisplay();
@@ -817,24 +1026,27 @@
 
   function cancelEdit() {
     editing = false;
-    timeInput.style.display = 'none';
+    timeInput.style.display  = 'none';
     timeDisplay.style.display = 'block';
   }
 
   timeInput.addEventListener('keydown', e => {
-    if (e.key === 'Enter') commitEdit();
+    if (e.key === 'Enter')  commitEdit();
     if (e.key === 'Escape') cancelEdit();
   });
-
   timeInput.addEventListener('blur', commitEdit);
 
-  /* ── DONE ── */
+  /* ══════════════════════════════════════
+     DONE
+  ══════════════════════════════════════ */
   document.getElementById('done-btn').addEventListener('click', () => {
-    doneScreen.style.display = 'none';
+    doneScreen.style.display  = 'none';
     setupScreen.style.display = 'flex';
   });
 
-  /* ── TOAST ── */
+  /* ══════════════════════════════════════
+     TOAST
+  ══════════════════════════════════════ */
   let toastTimer;
   function showToast(msg) {
     clearTimeout(toastTimer);
@@ -843,10 +1055,12 @@
     toastTimer = setTimeout(() => toast.classList.remove('show'), 2200);
   }
 
-  /* ── BROWSER NOTIFICATIONS ── */
+  /* ══════════════════════════════════════
+     NOTIFICATIONS
+  ══════════════════════════════════════ */
   function notify(msg) {
     if ('Notification' in window && Notification.permission === 'granted') {
-      new Notification('Pomodoro', { body: msg, silent: false });
+      new Notification('Pomodoro', { body: msg });
     } else if ('Notification' in window && Notification.permission !== 'denied') {
       Notification.requestPermission().then(p => {
         if (p === 'granted') new Notification('Pomodoro', { body: msg });
@@ -854,7 +1068,9 @@
     }
   }
 
-  /* ── INIT ── */
+  /* ══════════════════════════════════════
+     INIT
+  ══════════════════════════════════════ */
   setupScreen.style.display = 'flex';
 </script>
 </body>
