@@ -1,0 +1,861 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pomodoro</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #F7F5F0;
+      --surface: #EFECE5;
+      --border: rgba(0,0,0,0.10);
+      --text-primary: #1A1915;
+      --text-secondary: #8A8780;
+      --text-muted: #B8B5B0;
+      --accent: #1A1915;
+      --accent-soft: rgba(26,25,21,0.06);
+      --danger: #C94545;
+      --success: #3A7A52;
+      --radius: 16px;
+      --radius-sm: 8px;
+      --font-mono: 'DM Mono', monospace;
+      --font-sans: 'DM Sans', sans-serif;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #141412;
+        --surface: #1E1D1A;
+        --border: rgba(255,255,255,0.08);
+        --text-primary: #F0EDE6;
+        --text-secondary: #7A7872;
+        --text-muted: #4A4845;
+        --accent: #F0EDE6;
+        --accent-soft: rgba(240,237,230,0.06);
+        --danger: #E06060;
+        --success: #5AAA78;
+      }
+    }
+
+    html, body {
+      height: 100%;
+    }
+
+    body {
+      font-family: var(--font-sans);
+      background: var(--bg);
+      color: var(--text-primary);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      padding: 2rem 1rem;
+      transition: background 0.3s;
+    }
+
+    /* ── SETUP SCREEN ── */
+    #setup-screen {
+      width: 100%;
+      max-width: 380px;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      animation: fadeIn 0.4s ease;
+    }
+
+    .setup-title {
+      font-family: var(--font-mono);
+      font-size: 13px;
+      font-weight: 400;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      text-align: center;
+      margin-bottom: 2.5rem;
+    }
+
+    .setup-fields {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      background: var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+    }
+
+    .setup-field {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: var(--surface);
+      padding: 18px 20px;
+      gap: 16px;
+    }
+
+    .setup-field:first-child { border-radius: var(--radius) var(--radius) 0 0; }
+    .setup-field:last-child  { border-radius: 0 0 var(--radius) var(--radius); }
+
+    .setup-label {
+      font-size: 14px;
+      font-weight: 400;
+      color: var(--text-secondary);
+      flex: 1;
+    }
+
+    .setup-label span {
+      display: block;
+      font-size: 11px;
+      color: var(--text-muted);
+      margin-top: 1px;
+    }
+
+    .setup-stepper {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .stepper-btn {
+      width: 28px;
+      height: 28px;
+      border: 1px solid var(--border);
+      background: var(--bg);
+      border-radius: 50%;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 16px;
+      color: var(--text-secondary);
+      line-height: 1;
+      transition: background 0.15s, color 0.15s;
+      user-select: none;
+      flex-shrink: 0;
+    }
+
+    .stepper-btn:hover { background: var(--accent-soft); color: var(--text-primary); }
+    .stepper-btn:active { transform: scale(0.93); }
+
+    .stepper-val {
+      font-family: var(--font-mono);
+      font-size: 18px;
+      font-weight: 500;
+      color: var(--text-primary);
+      min-width: 36px;
+      text-align: center;
+    }
+
+    .start-btn {
+      margin-top: 20px;
+      width: 100%;
+      padding: 16px;
+      background: var(--text-primary);
+      color: var(--bg);
+      border: none;
+      border-radius: var(--radius);
+      font-family: var(--font-sans);
+      font-size: 14px;
+      font-weight: 500;
+      letter-spacing: 0.05em;
+      cursor: pointer;
+      transition: opacity 0.15s, transform 0.15s;
+    }
+
+    .start-btn:hover { opacity: 0.85; }
+    .start-btn:active { transform: scale(0.98); }
+
+    /* ── TIMER SCREEN ── */
+    #timer-screen {
+      width: 100%;
+      max-width: 480px;
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      gap: 0;
+      animation: fadeIn 0.4s ease;
+    }
+
+    .phase-label {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 400;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 2.5rem;
+      transition: color 0.3s;
+    }
+
+    /* progress arc */
+    .progress-ring-wrap {
+      position: relative;
+      width: 280px;
+      height: 280px;
+      margin-bottom: 2.8rem;
+    }
+
+    @media (min-width: 480px) {
+      .progress-ring-wrap { width: 340px; height: 340px; }
+    }
+
+    .progress-svg {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      transform: rotate(-90deg);
+    }
+
+    .progress-track {
+      fill: none;
+      stroke: var(--surface);
+      stroke-width: 2;
+    }
+
+    .progress-fill {
+      fill: none;
+      stroke: var(--text-primary);
+      stroke-width: 2;
+      stroke-linecap: round;
+      transition: stroke-dashoffset 0.9s linear, stroke 0.3s;
+    }
+
+    .timer-center {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* editable time display */
+    .time-display {
+      font-family: var(--font-mono);
+      font-size: clamp(52px, 14vw, 76px);
+      font-weight: 300;
+      color: var(--text-primary);
+      letter-spacing: -0.02em;
+      line-height: 1;
+      cursor: pointer;
+      border-radius: var(--radius-sm);
+      padding: 4px 8px;
+      transition: background 0.15s;
+      user-select: none;
+    }
+
+    .time-display:hover { background: var(--accent-soft); }
+
+    .time-input {
+      font-family: var(--font-mono);
+      font-size: clamp(52px, 14vw, 76px);
+      font-weight: 300;
+      color: var(--text-primary);
+      letter-spacing: -0.02em;
+      line-height: 1;
+      background: var(--accent-soft);
+      border: none;
+      border-radius: var(--radius-sm);
+      outline: none;
+      text-align: center;
+      width: 220px;
+      padding: 4px 8px;
+      display: none;
+      caret-color: var(--text-primary);
+    }
+
+    @media (min-width: 480px) {
+      .time-input { width: 270px; }
+    }
+
+    .edit-hint {
+      font-size: 11px;
+      color: var(--text-muted);
+      margin-top: 4px;
+      font-family: var(--font-mono);
+      letter-spacing: 0.05em;
+      opacity: 0;
+      transition: opacity 0.2s;
+    }
+
+    .progress-ring-wrap:hover .edit-hint { opacity: 1; }
+
+    /* quick adjust buttons */
+    .quick-adjust {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-bottom: 2.8rem;
+    }
+
+    .qa-btn {
+      height: 28px;
+      padding: 0 10px;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      border-radius: 100px;
+      font-family: var(--font-mono);
+      font-size: 12px;
+      font-weight: 400;
+      color: var(--text-secondary);
+      cursor: pointer;
+      transition: background 0.15s, color 0.15s;
+      white-space: nowrap;
+    }
+
+    .qa-btn:hover { background: var(--accent-soft); color: var(--text-primary); }
+    .qa-btn:active { transform: scale(0.95); }
+
+    .qa-sep {
+      width: 1px;
+      height: 14px;
+      background: var(--border);
+    }
+
+    /* controls */
+    .controls {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 3rem;
+    }
+
+    .ctrl-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      border-radius: 50%;
+      cursor: pointer;
+      transition: background 0.15s, color 0.15s, transform 0.15s;
+      color: var(--text-secondary);
+    }
+
+    .ctrl-btn:hover { background: var(--accent-soft); color: var(--text-primary); }
+    .ctrl-btn:active { transform: scale(0.93); }
+
+    .ctrl-btn.primary {
+      width: 56px;
+      height: 56px;
+      background: var(--text-primary);
+      color: var(--bg);
+      border-color: transparent;
+    }
+
+    .ctrl-btn.primary:hover { opacity: 0.85; background: var(--text-primary); }
+
+    .ctrl-btn.secondary { width: 40px; height: 40px; }
+
+    /* SVG icons */
+    .ctrl-btn svg { pointer-events: none; }
+
+    /* cycles indicator */
+    .cycles-row {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .cycle-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--text-muted);
+      transition: background 0.3s;
+    }
+
+    .cycle-dot.done { background: var(--text-primary); }
+    .cycle-dot.rest { background: var(--text-secondary); }
+
+    /* ── COMPLETION ── */
+    #done-screen {
+      width: 100%;
+      max-width: 380px;
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      gap: 0;
+      text-align: center;
+      animation: fadeIn 0.5s ease;
+    }
+
+    .done-title {
+      font-family: var(--font-mono);
+      font-size: 48px;
+      font-weight: 300;
+      letter-spacing: -0.03em;
+      color: var(--text-primary);
+      margin-bottom: 8px;
+    }
+
+    .done-sub {
+      font-size: 14px;
+      color: var(--text-secondary);
+      margin-bottom: 2.5rem;
+    }
+
+    .done-btn {
+      padding: 14px 32px;
+      background: var(--text-primary);
+      color: var(--bg);
+      border: none;
+      border-radius: var(--radius);
+      font-family: var(--font-sans);
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: opacity 0.15s;
+    }
+
+    .done-btn:hover { opacity: 0.8; }
+
+    /* ── NOTIFICATIONS ── */
+    .toast {
+      position: fixed;
+      bottom: 2rem;
+      left: 50%;
+      transform: translateX(-50%) translateY(8px);
+      background: var(--text-primary);
+      color: var(--bg);
+      font-family: var(--font-mono);
+      font-size: 12px;
+      letter-spacing: 0.08em;
+      padding: 10px 20px;
+      border-radius: 100px;
+      opacity: 0;
+      transition: opacity 0.25s, transform 0.25s;
+      pointer-events: none;
+      white-space: nowrap;
+      z-index: 100;
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+
+<!-- SETUP SCREEN -->
+<section id="setup-screen">
+  <p class="setup-title">Pomodoro</p>
+  <div class="setup-fields">
+    <div class="setup-field">
+      <div class="setup-label">
+        Trabajo
+        <span>minutos por sesión</span>
+      </div>
+      <div class="setup-stepper">
+        <button class="stepper-btn" data-target="work" data-dir="-1">−</button>
+        <span class="stepper-val" id="work-val">25</span>
+        <button class="stepper-btn" data-target="work" data-dir="1">+</button>
+      </div>
+    </div>
+    <div class="setup-field">
+      <div class="setup-label">
+        Descanso
+        <span>minutos por pausa</span>
+      </div>
+      <div class="setup-stepper">
+        <button class="stepper-btn" data-target="rest" data-dir="-1">−</button>
+        <span class="stepper-val" id="rest-val">5</span>
+        <button class="stepper-btn" data-target="rest" data-dir="1">+</button>
+      </div>
+    </div>
+    <div class="setup-field">
+      <div class="setup-label">
+        Ciclos
+        <span>trabajo + descanso</span>
+      </div>
+      <div class="setup-stepper">
+        <button class="stepper-btn" data-target="cycles" data-dir="-1">−</button>
+        <span class="stepper-val" id="cycles-val">4</span>
+        <button class="stepper-btn" data-target="cycles" data-dir="1">+</button>
+      </div>
+    </div>
+  </div>
+  <button class="start-btn" id="start-btn">Comenzar</button>
+</section>
+
+<!-- TIMER SCREEN -->
+<section id="timer-screen">
+  <p class="phase-label" id="phase-label">Trabajo · Ciclo 1</p>
+
+  <div class="progress-ring-wrap" id="ring-wrap">
+    <svg class="progress-svg" viewBox="0 0 100 100" id="progress-svg">
+      <circle class="progress-track" cx="50" cy="50" r="46"/>
+      <circle class="progress-fill" cx="50" cy="50" r="46" id="progress-fill"/>
+    </svg>
+    <div class="timer-center">
+      <span class="time-display" id="time-display" title="Clic para editar">00:00</span>
+      <input class="time-input" id="time-input" type="text" maxlength="5" placeholder="mm:ss" />
+      <span class="edit-hint">clic para editar</span>
+    </div>
+  </div>
+
+  <div class="quick-adjust">
+    <button class="qa-btn" data-adjust="-300">−5 min</button>
+    <button class="qa-btn" data-adjust="-60">−1 min</button>
+    <div class="qa-sep"></div>
+    <button class="qa-btn" data-adjust="60">+1 min</button>
+    <button class="qa-btn" data-adjust="300">+5 min</button>
+  </div>
+
+  <div class="controls">
+    <!-- Skip back -->
+    <button class="ctrl-btn secondary" id="btn-restart" title="Reiniciar sesión">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/>
+        <path d="M3 3v5h5"/>
+      </svg>
+    </button>
+
+    <!-- Play / Pause -->
+    <button class="ctrl-btn primary" id="btn-play" title="Iniciar / Pausar">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" id="play-icon">
+        <polygon points="5,3 19,12 5,21"/>
+      </svg>
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" id="pause-icon" style="display:none">
+        <rect x="6" y="4" width="4" height="16" rx="1"/>
+        <rect x="14" y="4" width="4" height="16" rx="1"/>
+      </svg>
+    </button>
+
+    <!-- Skip next -->
+    <button class="ctrl-btn secondary" id="btn-skip" title="Saltar sesión">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+        <polygon points="5,4 15,12 5,20"/>
+        <line x1="19" y1="5" x2="19" y2="19"/>
+      </svg>
+    </button>
+  </div>
+
+  <div class="cycles-row" id="cycles-row"></div>
+</section>
+
+<!-- DONE SCREEN -->
+<section id="done-screen">
+  <p class="done-title">¡Listo!</p>
+  <p class="done-sub" id="done-sub">Has completado todos tus ciclos.</p>
+  <button class="done-btn" id="done-btn">Nueva sesión</button>
+</section>
+
+<div class="toast" id="toast"></div>
+
+<script>
+  /* ── STATE ── */
+  const CFG = { work: 25, rest: 5, cycles: 4 };
+  let totalSecs = 0, remainSecs = 0, intervalId = null, running = false;
+  let currentPhase = 'work', currentCycle = 1, phaseSecs = 0;
+  let editing = false;
+
+  /* ── ELEMENTS ── */
+  const setupScreen  = document.getElementById('setup-screen');
+  const timerScreen  = document.getElementById('timer-screen');
+  const doneScreen   = document.getElementById('done-screen');
+  const phaseLabel   = document.getElementById('phase-label');
+  const timeDisplay  = document.getElementById('time-display');
+  const timeInput    = document.getElementById('time-input');
+  const progressFill = document.getElementById('progress-fill');
+  const progressSvg  = document.getElementById('progress-svg');
+  const cyclesRow    = document.getElementById('cycles-row');
+  const playIcon     = document.getElementById('play-icon');
+  const pauseIcon    = document.getElementById('pause-icon');
+  const toast        = document.getElementById('toast');
+  const doneSub      = document.getElementById('done-sub');
+
+  /* ── SETUP STEPPERS ── */
+  const LIMITS = { work: [1, 90], rest: [1, 30], cycles: [1, 12] };
+  document.querySelectorAll('.stepper-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const key = btn.dataset.target;
+      const dir = parseInt(btn.dataset.dir);
+      CFG[key] = Math.min(LIMITS[key][1], Math.max(LIMITS[key][0], CFG[key] + dir));
+      document.getElementById(key + '-val').textContent = CFG[key];
+    });
+  });
+
+  document.getElementById('start-btn').addEventListener('click', startSession);
+
+  /* ── PROGRESS RING ── */
+  const CIRC = 2 * Math.PI * 46;
+  progressFill.style.strokeDasharray = CIRC;
+  progressFill.style.strokeDashoffset = 0;
+
+  function updateRing(ratio) {
+    const offset = CIRC * (1 - Math.max(0, Math.min(1, ratio)));
+    progressFill.style.strokeDashoffset = offset;
+  }
+
+  /* ── RESPONSIVE RING SIZE ── */
+  function setRingViewBox() {
+    const w = progressSvg.clientWidth;
+    progressFill.style.transition = 'none';
+  }
+
+  /* ── TIME FORMATTING ── */
+  function fmtTime(s) {
+    const m = Math.floor(s / 60);
+    const sec = s % 60;
+    return String(m).padStart(2, '0') + ':' + String(sec).padStart(2, '0');
+  }
+
+  function parseTimeInput(str) {
+    const clean = str.replace(/[^0-9:]/g, '');
+    if (clean.includes(':')) {
+      const [m, s] = clean.split(':');
+      const mins = parseInt(m) || 0;
+      const secs = parseInt(s) || 0;
+      return mins * 60 + Math.min(59, secs);
+    }
+    if (clean.length <= 2) return (parseInt(clean) || 0) * 60;
+    if (clean.length === 3) return parseInt(clean[0]) * 60 + parseInt(clean.slice(1));
+    if (clean.length === 4) return parseInt(clean.slice(0,2)) * 60 + parseInt(clean.slice(2));
+    return null;
+  }
+
+  /* ── PHASE COLORS ── */
+  function applyPhaseStyle(phase) {
+    if (phase === 'rest') {
+      progressFill.style.stroke = 'var(--text-secondary)';
+    } else {
+      progressFill.style.stroke = 'var(--text-primary)';
+    }
+  }
+
+  /* ── CYCLE DOTS ── */
+  function buildDots() {
+    cyclesRow.innerHTML = '';
+    for (let i = 1; i <= CFG.cycles; i++) {
+      const dot = document.createElement('div');
+      dot.className = 'cycle-dot';
+      dot.id = 'dot-' + i;
+      if (i < currentCycle) dot.classList.add('done');
+      else if (i === currentCycle && currentPhase === 'rest') dot.classList.add('rest');
+      cyclesRow.appendChild(dot);
+    }
+  }
+
+  function updateDots() {
+    for (let i = 1; i <= CFG.cycles; i++) {
+      const dot = document.getElementById('dot-' + i);
+      if (!dot) continue;
+      dot.className = 'cycle-dot';
+      if (i < currentCycle) dot.classList.add('done');
+      else if (i === currentCycle && currentPhase === 'rest') dot.classList.add('rest');
+    }
+  }
+
+  /* ── SESSION INIT ── */
+  function startSession() {
+    currentPhase = 'work';
+    currentCycle = 1;
+    phaseSecs = CFG.work * 60;
+    remainSecs = phaseSecs;
+    totalSecs = phaseSecs;
+
+    setupScreen.style.display = 'none';
+    doneScreen.style.display = 'none';
+    timerScreen.style.display = 'flex';
+
+    buildDots();
+    applyPhaseStyle('work');
+    updateDisplay();
+    updatePhaseLabel();
+    updateRing(1);
+  }
+
+  /* ── PHASE TRANSITIONS ── */
+  function nextPhase() {
+    if (currentPhase === 'work') {
+      if (currentCycle >= CFG.cycles) {
+        endSession();
+        return;
+      }
+      currentPhase = 'rest';
+      phaseSecs = CFG.rest * 60;
+      showToast('¡Descanso!');
+    } else {
+      currentCycle++;
+      currentPhase = 'work';
+      phaseSecs = CFG.work * 60;
+      showToast('¡A trabajar!');
+    }
+    remainSecs = phaseSecs;
+    totalSecs = phaseSecs;
+    applyPhaseStyle(currentPhase);
+    updatePhaseLabel();
+    updateDots();
+    updateDisplay();
+    updateRing(1);
+
+    if (running) {
+      clearInterval(intervalId);
+      intervalId = setInterval(tick, 1000);
+    }
+  }
+
+  function endSession() {
+    clearInterval(intervalId);
+    running = false;
+    timerScreen.style.display = 'none';
+    doneScreen.style.display = 'flex';
+    const total = CFG.work * CFG.cycles;
+    doneSub.textContent = `${CFG.cycles} ciclos · ${total} min de trabajo · ¡Buen trabajo!`;
+    notify('¡Sesión completada!');
+  }
+
+  /* ── TICK ── */
+  function tick() {
+    if (remainSecs <= 0) {
+      notify(currentPhase === 'work' ? '¡Tiempo de trabajo terminado!' : '¡Descanso terminado!');
+      nextPhase();
+      return;
+    }
+    remainSecs--;
+    updateDisplay();
+    updateRing(remainSecs / totalSecs);
+  }
+
+  /* ── DISPLAY ── */
+  function updateDisplay() {
+    if (!editing) timeDisplay.textContent = fmtTime(remainSecs);
+  }
+
+  function updatePhaseLabel() {
+    const phase = currentPhase === 'work' ? 'Trabajo' : 'Descanso';
+    phaseLabel.textContent = `${phase} · Ciclo ${currentCycle}`;
+  }
+
+  /* ── PLAY / PAUSE ── */
+  document.getElementById('btn-play').addEventListener('click', togglePlay);
+
+  function togglePlay() {
+    if (editing) commitEdit();
+    running = !running;
+    playIcon.style.display  = running ? 'none' : 'block';
+    pauseIcon.style.display = running ? 'block' : 'none';
+    if (running) {
+      intervalId = setInterval(tick, 1000);
+    } else {
+      clearInterval(intervalId);
+    }
+  }
+
+  /* ── RESTART ── */
+  document.getElementById('btn-restart').addEventListener('click', () => {
+    if (editing) cancelEdit();
+    clearInterval(intervalId);
+    running = false;
+    playIcon.style.display  = 'block';
+    pauseIcon.style.display = 'none';
+    remainSecs = phaseSecs;
+    totalSecs  = phaseSecs;
+    updateDisplay();
+    updateRing(1);
+  });
+
+  /* ── SKIP ── */
+  document.getElementById('btn-skip').addEventListener('click', () => {
+    if (editing) cancelEdit();
+    clearInterval(intervalId);
+    remainSecs = 0;
+    nextPhase();
+    if (running) intervalId = setInterval(tick, 1000);
+  });
+
+  /* ── QUICK ADJUST ── */
+  document.querySelectorAll('.qa-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      if (editing) cancelEdit();
+      const delta = parseInt(btn.dataset.adjust);
+      remainSecs = Math.max(1, Math.min(5999, remainSecs + delta));
+      if (delta > totalSecs - remainSecs) totalSecs = remainSecs;
+      if (remainSecs > totalSecs) totalSecs = remainSecs;
+      updateDisplay();
+      updateRing(remainSecs / totalSecs);
+      const sign = delta > 0 ? '+' : '';
+      showToast(sign + (delta / 60) + ' min');
+    });
+  });
+
+  /* ── INLINE EDIT ── */
+  timeDisplay.addEventListener('click', startEdit);
+
+  function startEdit() {
+    editing = true;
+    timeDisplay.style.display = 'none';
+    timeInput.style.display = 'block';
+    timeInput.value = fmtTime(remainSecs);
+    timeInput.focus();
+    timeInput.select();
+  }
+
+  function commitEdit() {
+    const secs = parseTimeInput(timeInput.value);
+    if (secs !== null && secs > 0) {
+      remainSecs = Math.min(5999, secs);
+      if (remainSecs > totalSecs) totalSecs = remainSecs;
+      updateRing(remainSecs / totalSecs);
+    }
+    cancelEdit();
+    updateDisplay();
+  }
+
+  function cancelEdit() {
+    editing = false;
+    timeInput.style.display = 'none';
+    timeDisplay.style.display = 'block';
+  }
+
+  timeInput.addEventListener('keydown', e => {
+    if (e.key === 'Enter') commitEdit();
+    if (e.key === 'Escape') cancelEdit();
+  });
+
+  timeInput.addEventListener('blur', commitEdit);
+
+  /* ── DONE ── */
+  document.getElementById('done-btn').addEventListener('click', () => {
+    doneScreen.style.display = 'none';
+    setupScreen.style.display = 'flex';
+  });
+
+  /* ── TOAST ── */
+  let toastTimer;
+  function showToast(msg) {
+    clearTimeout(toastTimer);
+    toast.textContent = msg;
+    toast.classList.add('show');
+    toastTimer = setTimeout(() => toast.classList.remove('show'), 2200);
+  }
+
+  /* ── BROWSER NOTIFICATIONS ── */
+  function notify(msg) {
+    if ('Notification' in window && Notification.permission === 'granted') {
+      new Notification('Pomodoro', { body: msg, silent: false });
+    } else if ('Notification' in window && Notification.permission !== 'denied') {
+      Notification.requestPermission().then(p => {
+        if (p === 'granted') new Notification('Pomodoro', { body: msg });
+      });
+    }
+  }
+
+  /* ── INIT ── */
+  setupScreen.style.display = 'flex';
+</script>
+</body>
+</html>
