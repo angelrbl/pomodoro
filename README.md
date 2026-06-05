@@ -15,27 +15,6 @@ A minimal, lo-fi Pomodoro timer built with pure HTML, CSS, and JavaScript. No fr
 - **New session shortcut** — a button in the bottom bar lets you restart without finishing the current session.
 - **Responsive** — works on desktop and mobile.
 
-## File structure
-
-```
-/
-├── index.html
-├── sounds/
-│   ├── work-end.wav    ← plays when a work session ends
-│   └── rest-end.wav    ← plays when a rest session ends
-└── README.md
-```
-
-## Deploy to Cloudflare Pages (free plan)
-
-1. Push this repository to GitHub or GitLab.
-2. Go to [Cloudflare Pages](https://pages.cloudflare.com/) → **Create a project** → **Connect to Git**.
-3. Select your repository.
-4. Leave **Build command** empty and set **Build output directory** to `/` (or the folder where `index.html` lives).
-5. Click **Save and Deploy**.
-
-That's it. No build step needed — Cloudflare serves the static files directly.
-
 ## Sounds
 
 The two WAV files in `/sounds/` are simple chimes generated with Python's `wave` module — no external libraries required. You can replace them with any audio files you prefer (WAV or MP3), just keep the same filenames.
