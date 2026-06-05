@@ -10,138 +10,60 @@
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-    /* ═══════════════════════════════════════
-       THEMES
-    ═══════════════════════════════════════ */
-
-    /* Default: Papel (warm parchment) */
+    /* ═══ THEMES ═══ */
     [data-theme="papel"] {
-      --bg: #F5F0E8;
-      --bg2: #EDE7D9;
-      --surface: #E8E0CE;
-      --border: rgba(80,60,30,0.12);
-      --text-primary: #2C2415;
-      --text-secondary: #8C7A5E;
-      --text-muted: #B8A98A;
-      --accent-soft: rgba(44,36,21,0.06);
-      --bar-track: rgba(44,36,21,0.10);
-      --bar-fill: #7B6245;
-      --bar-rest: #9B8B72;
+      --bg: #F5F0E8; --surface: #E8E0CE; --border: rgba(80,60,30,0.12);
+      --text-primary: #2C2415; --text-secondary: #8C7A5E; --text-muted: #B8A98A;
+      --accent-soft: rgba(44,36,21,0.06); --bar-track: rgba(44,36,21,0.10);
+      --bar-fill: #7B6245; --bar-rest: #9B8B72;
     }
-
-    /* Lluvia (rainy blue-grey) */
     [data-theme="lluvia"] {
-      --bg: #EAECF0;
-      --bg2: #E0E3E9;
-      --surface: #D6DAE2;
-      --border: rgba(50,60,90,0.12);
-      --text-primary: #1E2535;
-      --text-secondary: #6B7590;
-      --text-muted: #A0AABF;
-      --accent-soft: rgba(30,37,53,0.06);
-      --bar-track: rgba(30,37,53,0.10);
-      --bar-fill: #4E6080;
-      --bar-rest: #7A90B0;
+      --bg: #EAECF0; --surface: #D6DAE2; --border: rgba(50,60,90,0.12);
+      --text-primary: #1E2535; --text-secondary: #6B7590; --text-muted: #A0AABF;
+      --accent-soft: rgba(30,37,53,0.06); --bar-track: rgba(30,37,53,0.10);
+      --bar-fill: #4E6080; --bar-rest: #7A90B0;
     }
-
-    /* Musgo (deep forest green) */
     [data-theme="musgo"] {
-      --bg: #E8EDE5;
-      --bg2: #DDE5D8;
-      --surface: #CDD8C6;
-      --border: rgba(30,55,30,0.12);
-      --text-primary: #1A2E18;
-      --text-secondary: #5E7A58;
-      --text-muted: #94AE8E;
-      --accent-soft: rgba(26,46,24,0.06);
-      --bar-track: rgba(26,46,24,0.10);
-      --bar-fill: #4A7040;
-      --bar-rest: #7A9E72;
+      --bg: #E8EDE5; --surface: #CDD8C6; --border: rgba(30,55,30,0.12);
+      --text-primary: #1A2E18; --text-secondary: #5E7A58; --text-muted: #94AE8E;
+      --accent-soft: rgba(26,46,24,0.06); --bar-track: rgba(26,46,24,0.10);
+      --bar-fill: #4A7040; --bar-rest: #7A9E72;
     }
-
-    /* Noche (soft dark) */
     [data-theme="noche"] {
-      --bg: #1C1B22;
-      --bg2: #242330;
-      --surface: #2E2D3A;
-      --border: rgba(200,195,230,0.10);
-      --text-primary: #E8E5F5;
-      --text-secondary: #8A87A8;
-      --text-muted: #55527A;
-      --accent-soft: rgba(232,229,245,0.06);
-      --bar-track: rgba(232,229,245,0.10);
-      --bar-fill: #9A95C8;
-      --bar-rest: #6B6895;
+      --bg: #1C1B22; --surface: #2E2D3A; --border: rgba(200,195,230,0.10);
+      --text-primary: #E8E5F5; --text-secondary: #8A87A8; --text-muted: #55527A;
+      --accent-soft: rgba(232,229,245,0.06); --bar-track: rgba(232,229,245,0.10);
+      --bar-fill: #9A95C8; --bar-rest: #6B6895;
     }
-
-    /* Durazno (warm peach-pink) */
     [data-theme="durazno"] {
-      --bg: #F5ECE5;
-      --bg2: #EEE2D8;
-      --surface: #E5D4C5;
-      --border: rgba(100,50,30,0.12);
-      --text-primary: #2E1A10;
-      --text-secondary: #9A6B55;
-      --text-muted: #C4997F;
-      --accent-soft: rgba(46,26,16,0.06);
-      --bar-track: rgba(46,26,16,0.10);
-      --bar-fill: #B06040;
-      --bar-rest: #C8896A;
+      --bg: #F5ECE5; --surface: #E5D4C5; --border: rgba(100,50,30,0.12);
+      --text-primary: #2E1A10; --text-secondary: #9A6B55; --text-muted: #C4997F;
+      --accent-soft: rgba(46,26,16,0.06); --bar-track: rgba(46,26,16,0.10);
+      --bar-fill: #B06040; --bar-rest: #C8896A;
     }
-
-    /* Blanco (pure light) */
     [data-theme="blanco"] {
-      --bg: #FFFFFF;
-      --bg2: #F7F7F7;
-      --surface: #F0F0F0;
-      --border: rgba(0,0,0,0.09);
-      --text-primary: #111111;
-      --text-secondary: #777777;
-      --text-muted: #BBBBBB;
-      --accent-soft: rgba(0,0,0,0.04);
-      --bar-track: rgba(0,0,0,0.08);
-      --bar-fill: #222222;
-      --bar-rest: #888888;
+      --bg: #FFFFFF; --surface: #F0F0F0; --border: rgba(0,0,0,0.09);
+      --text-primary: #111111; --text-secondary: #777777; --text-muted: #BBBBBB;
+      --accent-soft: rgba(0,0,0,0.04); --bar-track: rgba(0,0,0,0.08);
+      --bar-fill: #222222; --bar-rest: #888888;
     }
-
-    /* Negro (dark grey) */
     [data-theme="negro"] {
-      --bg: #2A2A2A;
-      --bg2: #323232;
-      --surface: #3C3C3C;
-      --border: rgba(255,255,255,0.09);
-      --text-primary: #EBEBEB;
-      --text-secondary: #909090;
-      --text-muted: #585858;
-      --accent-soft: rgba(255,255,255,0.06);
-      --bar-track: rgba(255,255,255,0.10);
-      --bar-fill: #C8C8C8;
-      --bar-rest: #707070;
+      --bg: #2A2A2A; --surface: #3C3C3C; --border: rgba(255,255,255,0.09);
+      --text-primary: #EBEBEB; --text-secondary: #909090; --text-muted: #585858;
+      --accent-soft: rgba(255,255,255,0.06); --bar-track: rgba(255,255,255,0.10);
+      --bar-fill: #C8C8C8; --bar-rest: #707070;
     }
-
-    /* Rojo (warm red light) */
     [data-theme="rojo"] {
-      --bg: #F7EDED;
-      --bg2: #F0E0E0;
-      --surface: #E8D0D0;
-      --border: rgba(160,40,30,0.13);
-      --text-primary: #2A0A0A;
-      --text-secondary: #A04040;
-      --text-muted: #D09090;
-      --accent-soft: rgba(180,40,30,0.07);
-      --bar-track: rgba(180,40,30,0.12);
-      --bar-fill: #C82020;
-      --bar-rest: #D07070;
+      --bg: #F7EDED; --surface: #E8D0D0; --border: rgba(160,40,30,0.13);
+      --text-primary: #2A0A0A; --text-secondary: #A04040; --text-muted: #D09090;
+      --accent-soft: rgba(180,40,30,0.07); --bar-track: rgba(180,40,30,0.12);
+      --bar-fill: #C82020; --bar-rest: #D07070;
     }
 
-    /* ═══════════════════════════════════════
-       BASE
-    ═══════════════════════════════════════ */
+    /* ═══ BASE ═══ */
     :root {
-      --radius: 18px;
-      --radius-sm: 10px;
-      --font: 'Nunito', sans-serif;
-      --font-sans: 'Nunito Sans', sans-serif;
+      --radius: 18px; --radius-sm: 10px;
+      --font: 'Nunito', sans-serif; --font-sans: 'Nunito Sans', sans-serif;
     }
 
     html, body { height: 100%; }
@@ -159,7 +81,7 @@
       transition: background 0.5s, color 0.5s;
     }
 
-    /* THEME PICKER */
+    /* ═══ THEME BAR ═══ */
     .theme-bar {
       position: fixed;
       bottom: 1.5rem;
@@ -167,35 +89,53 @@
       transform: translateX(-50%);
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 0;
       background: var(--surface);
       border: 1px solid var(--border);
       border-radius: 100px;
-      padding: 0 14px;
+      padding: 0 16px;
       height: 36px;
       z-index: 50;
       transition: background 0.5s, border-color 0.5s;
     }
 
+    .theme-label {
+      font-family: var(--font-sans);
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--text-muted);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      cursor: default;
+      user-select: none;
+      transition: color 0.5s;
+      white-space: nowrap;
+      display: flex;
+      align-items: center;
+      height: 100%;
+    }
+
     .theme-dots {
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 7px;
       overflow: hidden;
       max-width: 0;
       opacity: 0;
-      transition: max-width 0.4s ease, opacity 0.3s ease;
+      margin-left: 0;
+      transition: max-width 0.4s ease, opacity 0.3s ease, margin-left 0.4s ease;
     }
 
     .theme-bar:hover .theme-dots,
     .theme-bar.open .theme-dots {
       max-width: 300px;
       opacity: 1;
+      margin-left: 10px;
     }
 
     .theme-dot {
-      width: 20px;
-      height: 20px;
+      width: 18px;
+      height: 18px;
       border-radius: 50%;
       cursor: pointer;
       border: 2px solid transparent;
@@ -211,28 +151,48 @@
     .theme-dot[data-t="musgo"]   { background: #5A8C50; }
     .theme-dot[data-t="noche"]   { background: #8A85C0; }
     .theme-dot[data-t="durazno"] { background: #C07855; }
-    .theme-dot[data-t="blanco"]  { background: #E8E8E8; border: 2px solid #CCCCCC; }
+    .theme-dot[data-t="blanco"]  { background: #E8E8E8; border-color: #CCCCCC; }
     .theme-dot[data-t="negro"]   { background: #3A3A3A; }
     .theme-dot[data-t="rojo"]    { background: #C02010; }
 
-    .theme-label {
-      font-family: var(--font-sans);
-      font-size: 11px;
-      color: var(--text-muted);
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-      cursor: default;
-      user-select: none;
-      transition: color 0.5s;
-      white-space: nowrap;
-      line-height: 1;
-      display: flex;
-      align-items: center;
+    /* separator between dots and new-session btn */
+    .bar-sep {
+      width: 1px;
+      height: 14px;
+      background: var(--border);
+      flex-shrink: 0;
+      margin: 0 10px;
+      transition: background 0.5s;
+      display: none;
     }
 
-    /* ═══════════════════════════════════════
-       SETUP SCREEN
-    ═══════════════════════════════════════ */
+    .new-session-bar-btn {
+      font-family: var(--font-sans);
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--text-secondary);
+      letter-spacing: 0.04em;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 0;
+      white-space: nowrap;
+      display: none;
+      align-items: center;
+      height: 100%;
+      transition: color 0.15s;
+    }
+
+    .new-session-bar-btn.visible { display: flex; }
+    .new-session-bar-btn.visible ~ .bar-sep,
+    .bar-sep.visible { display: block; }
+    .new-session-bar-btn:hover { color: var(--text-primary); }
+
+    /* clickable cycle dots */
+    .cycle-dot { cursor: pointer; }
+    .cycle-dot:hover { opacity: 0.7; transform: scale(1.3); }
+
+    /* ═══ SETUP SCREEN ═══ */
     #setup-screen {
       width: 100%;
       max-width: 400px;
@@ -270,7 +230,7 @@
       background: var(--surface);
       padding: 20px 22px;
       gap: 16px;
-      transition: background 0.3s;
+      transition: background 0.5s;
     }
 
     .setup-field:first-child { border-radius: var(--radius) var(--radius) 0 0; }
@@ -281,6 +241,7 @@
       font-weight: 600;
       color: var(--text-secondary);
       flex: 1;
+      transition: color 0.5s;
     }
 
     .setup-label span {
@@ -289,9 +250,9 @@
       font-weight: 400;
       color: var(--text-muted);
       margin-top: 2px;
+      transition: color 0.5s;
     }
 
-    /* inline-editable value in setup */
     .setup-val-wrap {
       display: flex;
       align-items: center;
@@ -299,362 +260,255 @@
     }
 
     .stepper-btn {
-      width: 30px;
-      height: 30px;
+      width: 30px; height: 30px;
       border: 1px solid var(--border);
       background: var(--bg);
       border-radius: 50%;
       cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      display: flex; align-items: center; justify-content: center;
       font-size: 17px;
       color: var(--text-secondary);
-      line-height: 1;
-      transition: background 0.15s, color 0.15s;
-      user-select: none;
-      flex-shrink: 0;
+      transition: background 0.15s, color 0.15s, border-color 0.5s;
+      user-select: none; flex-shrink: 0;
     }
-
     .stepper-btn:hover { background: var(--accent-soft); color: var(--text-primary); }
     .stepper-btn:active { transform: scale(0.92); }
 
     .setup-editable {
       font-family: var(--font);
-      font-size: 22px;
-      font-weight: 800;
+      font-size: 22px; font-weight: 800;
       color: var(--text-primary);
-      min-width: 40px;
-      text-align: center;
+      min-width: 40px; text-align: center;
       cursor: pointer;
-      border-radius: 6px;
-      padding: 2px 6px;
-      transition: background 0.15s;
+      border-radius: 6px; padding: 2px 6px;
+      transition: background 0.15s, color 0.5s;
     }
-
     .setup-editable:hover { background: var(--accent-soft); }
 
     .setup-input {
       font-family: var(--font);
-      font-size: 22px;
-      font-weight: 800;
+      font-size: 22px; font-weight: 800;
       color: var(--text-primary);
       background: var(--accent-soft);
-      border: none;
-      outline: none;
-      border-radius: 6px;
-      padding: 2px 6px;
-      width: 56px;
-      text-align: center;
-      display: none;
-      caret-color: var(--text-primary);
-    }
-
-    .start-btn {
-      width: 100%;
-      padding: 17px;
-      background: var(--bar-fill);
-      color: #fff;
-      border: none;
-      border-radius: var(--radius);
-      font-family: var(--font);
-      font-size: 15px;
-      font-weight: 700;
-      letter-spacing: 0.04em;
-      cursor: pointer;
-      transition: opacity 0.15s, transform 0.15s, background 0.5s;
-    }
-
-    .start-btn:hover { opacity: 0.88; }
-    .start-btn:active { transform: scale(0.98); }
-
-    /* ═══════════════════════════════════════
-       TIMER SCREEN
-    ═══════════════════════════════════════ */
-    #timer-screen {
-      width: 100%;
-      max-width: 520px;
-      display: none;
-      flex-direction: column;
-      align-items: center;
-      animation: fadeUp 0.4s ease;
-    }
-
-    .phase-label {
-      font-family: var(--font-sans);
-      font-size: 12px;
-      font-weight: 600;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: var(--text-muted);
-      margin-bottom: 3rem;
-      transition: color 0.3s;
-    }
-
-    /* ── BIG TIME ── */
-    .timer-block {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      width: 100%;
-      margin-bottom: 1.6rem;
-    }
-
-    .time-display {
-      font-family: var(--font);
-      font-size: clamp(86px, 22vw, 130px);
-      font-weight: 800;
-      color: var(--text-primary);
-      letter-spacing: -0.03em;
-      line-height: 1;
-      cursor: pointer;
-      border-radius: var(--radius-sm);
-      padding: 4px 10px;
-      transition: background 0.15s, color 0.5s;
-      user-select: none;
-    }
-
-    .time-display:hover { background: var(--accent-soft); }
-
-    .time-input {
-      font-family: var(--font);
-      font-size: clamp(86px, 22vw, 130px);
-      font-weight: 800;
-      color: var(--text-primary);
-      letter-spacing: -0.03em;
-      line-height: 1;
-      background: var(--accent-soft);
-      border: none;
-      border-radius: var(--radius-sm);
-      outline: none;
-      text-align: center;
-      width: clamp(260px, 70vw, 420px);
-      padding: 4px 10px;
+      border: none; outline: none;
+      border-radius: 6px; padding: 2px 6px;
+      width: 56px; text-align: center;
       display: none;
       caret-color: var(--text-primary);
       transition: color 0.5s;
     }
 
-    .edit-hint {
-      font-size: 11px;
-      color: var(--text-muted);
-      margin-top: 6px;
-      font-family: var(--font-sans);
-      letter-spacing: 0.06em;
-      opacity: 0;
-      transition: opacity 0.2s;
-      height: 16px;
+    .start-btn {
+      width: 100%; padding: 17px;
+      background: var(--bar-fill); color: #fff;
+      border: none; border-radius: var(--radius);
+      font-family: var(--font); font-size: 15px; font-weight: 700;
+      letter-spacing: 0.04em; cursor: pointer;
+      transition: opacity 0.15s, transform 0.15s, background 0.5s;
+    }
+    .start-btn:hover { opacity: 0.88; }
+    .start-btn:active { transform: scale(0.98); }
+
+    /* ═══ TIMER SCREEN ═══ */
+    #timer-screen {
+      width: 100%; max-width: 520px;
+      display: none; flex-direction: column; align-items: center;
+      animation: fadeUp 0.4s ease;
     }
 
+    .phase-label {
+      font-family: var(--font-sans);
+      font-size: 12px; font-weight: 600;
+      letter-spacing: 0.18em; text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 3rem;
+      transition: color 0.5s;
+    }
+
+    .timer-block {
+      display: flex; flex-direction: column; align-items: center;
+      width: 100%; margin-bottom: 1.6rem;
+    }
+
+    .time-display {
+      font-family: var(--font);
+      font-size: clamp(86px, 22vw, 130px);
+      font-weight: 800; color: var(--text-primary);
+      letter-spacing: -0.03em; line-height: 1;
+      cursor: pointer;
+      border-radius: var(--radius-sm); padding: 4px 10px;
+      transition: background 0.15s, color 0.5s;
+      user-select: none;
+    }
+    .time-display:hover { background: var(--accent-soft); }
+
+    .time-input {
+      font-family: var(--font);
+      font-size: clamp(86px, 22vw, 130px);
+      font-weight: 800; color: var(--text-primary);
+      letter-spacing: -0.03em; line-height: 1;
+      background: var(--accent-soft);
+      border: none; border-radius: var(--radius-sm);
+      outline: none; text-align: center;
+      width: clamp(260px, 70vw, 420px);
+      padding: 4px 10px; display: none;
+      caret-color: var(--text-primary);
+      transition: color 0.5s;
+    }
+
+    .edit-hint {
+      font-size: 11px; color: var(--text-muted);
+      margin-top: 6px;
+      font-family: var(--font-sans); letter-spacing: 0.06em;
+      opacity: 0; transition: opacity 0.2s; height: 16px;
+    }
     .timer-block:hover .edit-hint { opacity: 1; }
 
-    /* ── PROGRESS BAR ── */
+    /* ── progress bar ── */
     .progress-wrap {
-      width: 100%;
-      max-width: 400px;
-      position: relative;
-      height: 3px;
+      width: 100%; max-width: 400px;
+      position: relative; height: 3px;
       margin-bottom: 2.4rem;
       border-radius: 100px;
       background: var(--bar-track);
     }
 
-    /* Single bar centered: shrinks equally from left AND right end */
     .progress-bar {
-      position: absolute;
-      top: 0;
-      height: 100%;
+      position: absolute; top: 0; height: 100%;
       background: var(--bar-fill);
       border-radius: 100px;
-      /* left & width controlled by JS so it stays centered while shrinking */
       transition: left 0.9s linear, width 0.9s linear, background 0.5s;
     }
 
-    /* ── QUICK ADJUST ── */
+    /* ── quick adjust ── */
     .quick-adjust {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      margin-bottom: 2.6rem;
+      display: flex; align-items: center;
+      gap: 6px; margin-bottom: 2.6rem;
     }
 
     .qa-btn {
-      height: 30px;
-      padding: 0 12px;
+      height: 30px; padding: 0 12px;
       border: 1px solid var(--border);
       background: var(--surface);
       border-radius: 100px;
-      font-family: var(--font);
-      font-size: 12px;
-      font-weight: 600;
+      font-family: var(--font); font-size: 12px; font-weight: 600;
       color: var(--text-secondary);
       cursor: pointer;
       transition: background 0.15s, color 0.15s, border-color 0.5s;
       white-space: nowrap;
     }
-
     .qa-btn:hover { background: var(--accent-soft); color: var(--text-primary); }
     .qa-btn:active { transform: scale(0.95); }
-
     .qa-sep { width: 1px; height: 14px; background: var(--border); }
 
-    /* ── CONTROLS ── */
+    /* ── controls ── */
     .controls {
-      display: flex;
-      align-items: center;
-      gap: 14px;
-      margin-bottom: 2.8rem;
+      display: flex; align-items: center;
+      gap: 14px; margin-bottom: 2.8rem;
     }
 
     .ctrl-btn {
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      display: flex; align-items: center; justify-content: center;
       border: 1px solid var(--border);
-      background: var(--surface);
-      border-radius: 50%;
+      background: var(--surface); border-radius: 50%;
       cursor: pointer;
       transition: background 0.15s, color 0.15s, transform 0.15s, border-color 0.5s;
       color: var(--text-secondary);
     }
-
     .ctrl-btn:hover { background: var(--accent-soft); color: var(--text-primary); }
     .ctrl-btn:active { transform: scale(0.93); }
-
     .ctrl-btn.primary {
-      width: 58px;
-      height: 58px;
-      background: var(--bar-fill);
-      color: #fff;
+      width: 58px; height: 58px;
+      background: var(--bar-fill); color: #fff;
       border-color: transparent;
       transition: opacity 0.15s, background 0.5s;
     }
-
     .ctrl-btn.primary:hover { opacity: 0.85; background: var(--bar-fill); }
     .ctrl-btn.secondary { width: 42px; height: 42px; }
 
-    /* ── CYCLES ── */
+    /* ── cycle dots (clickable) ── */
     .cycles-row {
-      display: flex;
-      align-items: center;
-      gap: 7px;
+      display: flex; align-items: center; gap: 10px;
     }
 
     .cycle-dot {
-      width: 7px;
-      height: 7px;
+      width: 8px; height: 8px;
       border-radius: 50%;
       background: var(--bar-track);
       transition: background 0.3s, transform 0.3s;
+      cursor: pointer;
+      position: relative;
     }
-
+    .cycle-dot::after {
+      content: '';
+      position: absolute;
+      inset: -6px;
+      border-radius: 50%;
+    }
+    .cycle-dot:hover { transform: scale(1.5); background: var(--text-muted); }
     .cycle-dot.done { background: var(--bar-fill); }
-    .cycle-dot.active { background: var(--bar-fill); transform: scale(1.4); }
-    .cycle-dot.rest { background: var(--bar-rest); transform: scale(1.2); }
+    .cycle-dot.active { background: var(--bar-fill); transform: scale(1.5); }
+    .cycle-dot.rest { background: var(--bar-rest); transform: scale(1.3); }
 
-    /* ═══════════════════════════════════════
-       DONE SCREEN
-    ═══════════════════════════════════════ */
+    /* ═══ DONE SCREEN ═══ */
     #done-screen {
-      width: 100%;
-      max-width: 400px;
-      display: none;
-      flex-direction: column;
-      align-items: center;
-      text-align: center;
+      width: 100%; max-width: 400px;
+      display: none; flex-direction: column;
+      align-items: center; text-align: center;
       animation: fadeUp 0.5s ease;
-    }
-
-    .done-emoji {
-      font-size: 48px;
-      margin-bottom: 1rem;
     }
 
     .done-title {
       font-family: var(--font);
-      font-size: 40px;
-      font-weight: 800;
+      font-size: 48px; font-weight: 800;
       color: var(--text-primary);
       margin-bottom: 8px;
+      transition: color 0.5s;
     }
 
     .done-sub {
-      font-size: 14px;
-      font-weight: 400;
+      font-size: 14px; font-weight: 400;
       color: var(--text-secondary);
-      margin-bottom: 2.5rem;
-      line-height: 1.6;
+      margin-bottom: 2.5rem; line-height: 1.6;
+      transition: color 0.5s;
     }
 
     .done-btn {
       padding: 15px 36px;
-      background: var(--bar-fill);
-      color: #fff;
-      border: none;
-      border-radius: var(--radius);
-      font-family: var(--font);
-      font-size: 14px;
-      font-weight: 700;
+      background: var(--bar-fill); color: #fff;
+      border: none; border-radius: var(--radius);
+      font-family: var(--font); font-size: 14px; font-weight: 700;
       cursor: pointer;
       transition: opacity 0.15s, background 0.5s;
     }
-
     .done-btn:hover { opacity: 0.85; }
 
-    /* ═══════════════════════════════════════
-       TOAST
-    ═══════════════════════════════════════ */
+    /* ═══ TOAST ═══ */
     .toast {
-      position: fixed;
-      bottom: 5.5rem;
-      left: 50%;
+      position: fixed; bottom: 5.5rem; left: 50%;
       transform: translateX(-50%) translateY(8px);
-      background: var(--text-primary);
-      color: var(--bg);
-      font-family: var(--font);
-      font-size: 13px;
-      font-weight: 600;
-      padding: 10px 22px;
-      border-radius: 100px;
-      opacity: 0;
+      background: var(--text-primary); color: var(--bg);
+      font-family: var(--font); font-size: 13px; font-weight: 600;
+      padding: 10px 22px; border-radius: 100px;
+      opacity: 0; pointer-events: none; white-space: nowrap; z-index: 100;
       transition: opacity 0.25s, transform 0.25s, background 0.5s, color 0.5s;
-      pointer-events: none;
-      white-space: nowrap;
-      z-index: 100;
     }
+    .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
 
-    .toast.show {
-      opacity: 1;
-      transform: translateX(-50%) translateY(0);
-    }
-
-    /* ═══════════════════════════════════════
-       RESPONSIVE
-    ═══════════════════════════════════════ */
+    /* ═══ RESPONSIVE ═══ */
     @media (max-width: 480px) {
       body { padding: 1.5rem 1rem 5rem; justify-content: flex-start; padding-top: 3rem; }
-
-      #setup-screen { max-width: 100%; }
-      .setup-field { padding: 16px 16px; }
-
-      #timer-screen { max-width: 100%; }
+      #setup-screen, #timer-screen, #done-screen { max-width: 100%; }
+      .setup-field { padding: 16px; }
       .phase-label { margin-bottom: 2rem; }
-
       .timer-block { margin-bottom: 1.2rem; }
-
       .progress-wrap { max-width: 100%; margin-bottom: 1.8rem; }
-
       .quick-adjust { gap: 4px; margin-bottom: 2rem; }
       .qa-btn { padding: 0 9px; font-size: 11px; height: 28px; }
-
       .controls { margin-bottom: 2rem; }
-
-      .theme-bar { bottom: 1rem; padding: 6px 12px; }
-      .theme-dot { width: 18px; height: 18px; }
-
-      #done-screen { max-width: 100%; }
+      .theme-bar { bottom: 1rem; padding: 0 12px; }
+      .theme-dot { width: 16px; height: 16px; }
     }
-
     @media (max-width: 360px) {
       .qa-btn { padding: 0 7px; font-size: 10px; }
     }
@@ -670,62 +524,51 @@
 <!-- THEME BAR -->
 <div class="theme-bar" id="theme-bar">
   <span class="theme-label">tema</span>
-  <div class="theme-dots">
-    <div class="theme-dot active" data-t="papel"   title="Papel"></div>
-    <div class="theme-dot"        data-t="lluvia"  title="Lluvia"></div>
-    <div class="theme-dot"        data-t="musgo"   title="Musgo"></div>
-    <div class="theme-dot"        data-t="noche"   title="Noche"></div>
-    <div class="theme-dot"        data-t="durazno" title="Durazno"></div>
-    <div class="theme-dot"        data-t="blanco"  title="Blanco"></div>
-    <div class="theme-dot"        data-t="negro"   title="Negro"></div>
-    <div class="theme-dot"        data-t="rojo"    title="Rojo"></div>
+  <div class="theme-dots" id="theme-dots">
+    <div class="theme-dot" data-t="papel"   title="Papel"></div>
+    <div class="theme-dot" data-t="lluvia"  title="Lluvia"></div>
+    <div class="theme-dot" data-t="musgo"   title="Musgo"></div>
+    <div class="theme-dot" data-t="noche"   title="Noche"></div>
+    <div class="theme-dot" data-t="durazno" title="Durazno"></div>
+    <div class="theme-dot" data-t="blanco"  title="Blanco"></div>
+    <div class="theme-dot" data-t="negro"   title="Negro"></div>
+    <div class="theme-dot" data-t="rojo"    title="Rojo"></div>
   </div>
+  <div class="bar-sep" id="bar-sep" style="display:none"></div>
+  <button class="new-session-bar-btn" id="new-session-bar-btn">nueva sesión</button>
 </div>
 
 <!-- SETUP SCREEN -->
 <section id="setup-screen">
   <p class="setup-title">Pomodoro</p>
   <div class="setup-fields">
-
     <div class="setup-field">
-      <div class="setup-label">
-        Trabajo
-        <span>minutos de estudio</span>
-      </div>
+      <div class="setup-label">Trabajo <span>minutos de estudio</span></div>
       <div class="setup-val-wrap">
         <button class="stepper-btn" data-target="work" data-dir="-1">−</button>
         <span class="setup-editable" id="work-disp" data-key="work">25</span>
-        <input class="setup-input"  id="work-inp"  type="text" maxlength="3" value="25" />
+        <input class="setup-input" id="work-inp" type="text" maxlength="3" value="25" />
         <button class="stepper-btn" data-target="work" data-dir="1">+</button>
       </div>
     </div>
-
     <div class="setup-field">
-      <div class="setup-label">
-        Descanso
-        <span>minutos de pausa</span>
-      </div>
+      <div class="setup-label">Descanso <span>minutos de pausa</span></div>
       <div class="setup-val-wrap">
         <button class="stepper-btn" data-target="rest" data-dir="-1">−</button>
         <span class="setup-editable" id="rest-disp" data-key="rest">5</span>
-        <input class="setup-input"  id="rest-inp"  type="text" maxlength="3" value="5" />
+        <input class="setup-input" id="rest-inp" type="text" maxlength="3" value="5" />
         <button class="stepper-btn" data-target="rest" data-dir="1">+</button>
       </div>
     </div>
-
     <div class="setup-field">
-      <div class="setup-label">
-        Ciclos
-        <span>trabajo + descanso</span>
-      </div>
+      <div class="setup-label">Ciclos <span>trabajo + descanso</span></div>
       <div class="setup-val-wrap">
         <button class="stepper-btn" data-target="cycles" data-dir="-1">−</button>
         <span class="setup-editable" id="cycles-disp" data-key="cycles">4</span>
-        <input class="setup-input"  id="cycles-inp"  type="text" maxlength="2" value="4" />
+        <input class="setup-input" id="cycles-inp" type="text" maxlength="2" value="4" />
         <button class="stepper-btn" data-target="cycles" data-dir="1">+</button>
       </div>
     </div>
-
   </div>
   <button class="start-btn" id="start-btn">Comenzar</button>
 </section>
@@ -733,17 +576,14 @@
 <!-- TIMER SCREEN -->
 <section id="timer-screen">
   <p class="phase-label" id="phase-label">Trabajo · Ciclo 1</p>
-
-  <div class="timer-block" id="timer-block">
+  <div class="timer-block">
     <span class="time-display" id="time-display">00:00</span>
-    <input class="time-input"  id="time-input" type="text" maxlength="5" placeholder="mm:ss" />
+    <input class="time-input" id="time-input" type="text" maxlength="5" placeholder="mm:ss" />
     <span class="edit-hint">toca para editar</span>
   </div>
-
-  <div class="progress-wrap" id="progress-wrap">
+  <div class="progress-wrap">
     <div class="progress-bar" id="prog-bar"></div>
   </div>
-
   <div class="quick-adjust">
     <button class="qa-btn" data-adjust="-300">−5 min</button>
     <button class="qa-btn" data-adjust="-60">−1 min</button>
@@ -751,34 +591,27 @@
     <button class="qa-btn" data-adjust="60">+1 min</button>
     <button class="qa-btn" data-adjust="300">+5 min</button>
   </div>
-
   <div class="controls">
     <button class="ctrl-btn secondary" id="btn-restart" title="Reiniciar sesión">
       <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/>
-        <path d="M3 3v5h5"/>
+        <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/>
       </svg>
     </button>
-
-    <button class="ctrl-btn primary" id="btn-play" title="Iniciar / Pausar">
+    <button class="ctrl-btn primary" id="btn-play">
       <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" id="play-icon"><polygon points="6,3 20,12 6,21"/></svg>
       <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" id="pause-icon" style="display:none"><rect x="5" y="4" width="4" height="16" rx="1.5"/><rect x="15" y="4" width="4" height="16" rx="1.5"/></svg>
     </button>
-
     <button class="ctrl-btn secondary" id="btn-skip" title="Saltar sesión">
       <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-        <polygon points="5,4 15,12 5,20"/>
-        <line x1="19" y1="5" x2="19" y2="19"/>
+        <polygon points="5,4 15,12 5,20"/><line x1="19" y1="5" x2="19" y2="19"/>
       </svg>
     </button>
   </div>
-
   <div class="cycles-row" id="cycles-row"></div>
 </section>
 
 <!-- DONE SCREEN -->
 <section id="done-screen">
-  <div class="done-emoji">🌿</div>
   <p class="done-title">¡Listo!</p>
   <p class="done-sub" id="done-sub">Has completado todos tus ciclos.</p>
   <button class="done-btn" id="done-btn">Nueva sesión</button>
@@ -787,9 +620,28 @@
 <div class="toast" id="toast"></div>
 
 <script>
-  /* ══════════════════════════════════════
-     THEME
-  ══════════════════════════════════════ */
+  /* ── AUDIO ──
+     Put these two files in a /sounds/ folder in your repo:
+       sounds/work-end.wav  (plays when a work session ends)
+       sounds/rest-end.wav  (plays when a rest session ends)
+  */
+  const SOUNDS = {
+    work: new Audio('./sounds/work-end.wav'),
+    rest: new Audio('./sounds/rest-end.wav'),
+  };
+  SOUNDS.work.volume = 0.7;
+  SOUNDS.rest.volume = 0.7;
+
+  function playSound(type) {
+    try {
+      const s = SOUNDS[type];
+      if (!s) return;
+      s.currentTime = 0;
+      s.play().catch(() => {});
+    } catch(e) {}
+  }
+
+  /* ── THEME ── */
   const body = document.body;
   const THEME_KEY = 'pomo-theme';
   let currentTheme = localStorage.getItem(THEME_KEY) || 'papel';
@@ -798,26 +650,49 @@
     body.setAttribute('data-theme', t);
     currentTheme = t;
     localStorage.setItem(THEME_KEY, t);
-    document.querySelectorAll('.theme-dot').forEach(d => {
-      d.classList.toggle('active', d.dataset.t === t);
-    });
-    // keep bar-fill color synced on play button
-    syncAccentColor();
+    document.querySelectorAll('.theme-dot').forEach(d =>
+      d.classList.toggle('active', d.dataset.t === t)
+    );
   }
 
-  document.querySelectorAll('.theme-dot').forEach(d => {
-    d.addEventListener('click', () => applyTheme(d.dataset.t));
-  });
+  document.querySelectorAll('.theme-dot').forEach(d =>
+    d.addEventListener('click', () => applyTheme(d.dataset.t))
+  );
 
   applyTheme(currentTheme);
 
-  function syncAccentColor() {
-    // bar-fill is a CSS var so buttons that use it auto-update
+  /* mobile: tap "tema" label to toggle dots */
+  const themeBar = document.getElementById('theme-bar');
+  themeBar.addEventListener('touchstart', e => {
+    if (!e.target.classList.contains('theme-dot') &&
+        !e.target.classList.contains('new-session-bar-btn')) {
+      themeBar.classList.toggle('open');
+      e.preventDefault();
+    }
+  }, { passive: false });
+
+  /* ── NEW SESSION BAR BUTTON ── */
+  const newSessionBarBtn = document.getElementById('new-session-bar-btn');
+  const barSep           = document.getElementById('bar-sep');
+
+  function setBarNewSessionVisible(v) {
+    newSessionBarBtn.classList.toggle('visible', v);
+    barSep.style.display = v ? 'block' : 'none';
+    barSep.style.marginLeft = v ? '' : '0';
   }
 
-  /* ══════════════════════════════════════
-     STATE
-  ══════════════════════════════════════ */
+  newSessionBarBtn.addEventListener('click', () => {
+    clearInterval(intervalId);
+    running = false;
+    playIcon.style.display  = 'block';
+    pauseIcon.style.display = 'none';
+    timerScreen.style.display = 'none';
+    doneScreen.style.display  = 'none';
+    setupScreen.style.display = 'flex';
+    setBarNewSessionVisible(false);
+  });
+
+  /* ── STATE ── */
   const CFG = { work: 25, rest: 5, cycles: 4 };
   const LIMITS = { work: [1, 90], rest: [1, 30], cycles: [1, 12] };
 
@@ -825,9 +700,7 @@
   let currentPhase = 'work', currentCycle = 1, phaseSecs = 0;
   let editing = false;
 
-  /* ══════════════════════════════════════
-     ELEMENTS
-  ══════════════════════════════════════ */
+  /* ── ELEMENTS ── */
   const setupScreen  = document.getElementById('setup-screen');
   const timerScreen  = document.getElementById('timer-screen');
   const doneScreen   = document.getElementById('done-screen');
@@ -841,47 +714,38 @@
   const toast        = document.getElementById('toast');
   const doneSub      = document.getElementById('done-sub');
 
-  /* ══════════════════════════════════════
-     SETUP — inline editable values
-  ══════════════════════════════════════ */
+  /* ── SETUP STEPPERS ── */
   function syncSetupDisplay(key) {
     document.getElementById(key + '-disp').textContent = CFG[key];
     document.getElementById(key + '-inp').value = CFG[key];
   }
 
-  // Stepper buttons
   document.querySelectorAll('.stepper-btn').forEach(btn => {
     btn.addEventListener('click', () => {
-      const key = btn.dataset.target;
-      const dir = parseInt(btn.dataset.dir);
+      const key = btn.dataset.target, dir = parseInt(btn.dataset.dir);
       CFG[key] = Math.min(LIMITS[key][1], Math.max(LIMITS[key][0], CFG[key] + dir));
       syncSetupDisplay(key);
     });
   });
 
-  // Click on displayed value → show input
   document.querySelectorAll('.setup-editable').forEach(span => {
     span.addEventListener('click', () => {
       const key = span.dataset.key;
       const inp = document.getElementById(key + '-inp');
       span.style.display = 'none';
-      inp.style.display = 'block';
+      inp.style.display  = 'block';
       inp.value = CFG[key];
-      inp.focus();
-      inp.select();
+      inp.focus(); inp.select();
     });
   });
 
-  // Commit setup input
   function commitSetupInput(key) {
-    const inp = document.getElementById(key + '-inp');
+    const inp  = document.getElementById(key + '-inp');
     const disp = document.getElementById(key + '-disp');
-    const val = parseInt(inp.value);
-    if (!isNaN(val) && val >= LIMITS[key][0] && val <= LIMITS[key][1]) {
-      CFG[key] = val;
-    }
+    const val  = parseInt(inp.value);
+    if (!isNaN(val) && val >= LIMITS[key][0] && val <= LIMITS[key][1]) CFG[key] = val;
     syncSetupDisplay(key);
-    inp.style.display = 'none';
+    inp.style.display  = 'none';
     disp.style.display = 'inline';
   }
 
@@ -894,54 +758,41 @@
     inp.addEventListener('blur', () => commitSetupInput(key));
   });
 
-  /* ══════════════════════════════════════
-     PROGRESS BAR — shrinks from outer ends inward
-  ══════════════════════════════════════ */
+  /* ── PROGRESS BAR (shrinks from outer ends inward) ── */
   function updateBar(ratio) {
-    const r = Math.max(0, Math.min(1, ratio));
+    const r   = Math.max(0, Math.min(1, ratio));
     const pct = r * 100;
-    const offset = (100 - pct) / 2;
-    progBar.style.left  = offset + '%';
+    progBar.style.left  = ((100 - pct) / 2) + '%';
     progBar.style.width = pct + '%';
   }
 
-  /* ══════════════════════════════════════
-     TIME FORMAT
-  ══════════════════════════════════════ */
+  /* ── TIME FORMAT ── */
   function fmtTime(s) {
-    const m = Math.floor(s / 60);
-    const sec = s % 60;
-    return String(m).padStart(2,'0') + ':' + String(sec).padStart(2,'0');
+    return String(Math.floor(s/60)).padStart(2,'0') + ':' + String(s%60).padStart(2,'0');
   }
 
   function parseTimeInput(str) {
-    const clean = str.replace(/[^0-9:]/g,'');
-    if (clean.includes(':')) {
-      const [m,s] = clean.split(':');
-      return (parseInt(m)||0)*60 + Math.min(59, parseInt(s)||0);
-    }
-    if (clean.length <= 2) return (parseInt(clean)||0)*60;
-    if (clean.length === 3) return parseInt(clean[0])*60 + parseInt(clean.slice(1));
-    return parseInt(clean.slice(0,2))*60 + parseInt(clean.slice(2));
+    const c = str.replace(/[^0-9:]/g,'');
+    if (c.includes(':')) { const [m,s]=c.split(':'); return (parseInt(m)||0)*60+Math.min(59,parseInt(s)||0); }
+    if (c.length<=2) return (parseInt(c)||0)*60;
+    if (c.length===3) return parseInt(c[0])*60+parseInt(c.slice(1));
+    return parseInt(c.slice(0,2))*60+parseInt(c.slice(2));
   }
 
-  /* ══════════════════════════════════════
-     PHASE STYLE
-  ══════════════════════════════════════ */
+  /* ── PHASE STYLE ── */
   function applyPhaseStyle(phase) {
-    const isRest = phase === 'rest';
-    progBar.style.background = isRest ? 'var(--bar-rest)' : 'var(--bar-fill)';
+    progBar.style.background = phase === 'rest' ? 'var(--bar-rest)' : 'var(--bar-fill)';
   }
 
-  /* ══════════════════════════════════════
-     CYCLE DOTS
-  ══════════════════════════════════════ */
+  /* ── CYCLE DOTS ── */
   function buildDots() {
     cyclesRow.innerHTML = '';
     for (let i = 1; i <= CFG.cycles; i++) {
       const dot = document.createElement('div');
       dot.className = 'cycle-dot';
       dot.id = 'dot-' + i;
+      dot.title = `Saltar al ciclo ${i}`;
+      dot.addEventListener('click', () => jumpToCycle(i));
       cyclesRow.appendChild(dot);
     }
     updateDots();
@@ -958,9 +809,24 @@
     }
   }
 
-  /* ══════════════════════════════════════
-     SESSION START — auto-begins
-  ══════════════════════════════════════ */
+  function jumpToCycle(n) {
+    if (n === currentCycle) return;
+    clearInterval(intervalId);
+    currentCycle = n;
+    currentPhase = 'work';
+    phaseSecs    = CFG.work * 60;
+    remainSecs   = phaseSecs;
+    totalSecs    = phaseSecs;
+    applyPhaseStyle('work');
+    updatePhaseLabel();
+    updateDots();
+    updateDisplay();
+    updateBar(1);
+    if (running) intervalId = setInterval(tick, 1000);
+    showToast(`Ciclo ${n}`);
+  }
+
+  /* ── SESSION START ── */
   function startSession() {
     currentPhase = 'work';
     currentCycle = 1;
@@ -971,6 +837,7 @@
     setupScreen.style.display = 'none';
     doneScreen.style.display  = 'none';
     timerScreen.style.display = 'flex';
+    setBarNewSessionVisible(true);
 
     buildDots();
     applyPhaseStyle('work');
@@ -978,7 +845,6 @@
     updatePhaseLabel();
     updateBar(1);
 
-    // auto-start
     running = true;
     playIcon.style.display  = 'none';
     pauseIcon.style.display = 'block';
@@ -987,9 +853,7 @@
 
   document.getElementById('start-btn').addEventListener('click', startSession);
 
-  /* ══════════════════════════════════════
-     PHASE TRANSITIONS
-  ══════════════════════════════════════ */
+  /* ── PHASE TRANSITIONS ── */
   function nextPhase() {
     if (currentPhase === 'work') {
       if (currentCycle >= CFG.cycles) { endSession(); return; }
@@ -1002,37 +866,31 @@
       phaseSecs    = CFG.work * 60;
       showToast('¡A trabajar!');
     }
-    remainSecs = phaseSecs;
-    totalSecs  = phaseSecs;
+    remainSecs = phaseSecs; totalSecs = phaseSecs;
     applyPhaseStyle(currentPhase);
-    updatePhaseLabel();
-    updateDots();
-    updateDisplay();
-    updateBar(1);
-
-    if (running) {
-      clearInterval(intervalId);
-      intervalId = setInterval(tick, 1000);
-    }
+    updatePhaseLabel(); updateDots(); updateDisplay(); updateBar(1);
+    if (running) { clearInterval(intervalId); intervalId = setInterval(tick, 1000); }
   }
 
   function endSession() {
     clearInterval(intervalId);
     running = false;
+    playIcon.style.display  = 'block';
+    pauseIcon.style.display = 'none';
     timerScreen.style.display = 'none';
     doneScreen.style.display  = 'flex';
+    setBarNewSessionVisible(false);
     const total = CFG.work * CFG.cycles;
     doneSub.textContent = `${CFG.cycles} ciclos · ${total} min de trabajo · ¡Buen trabajo!`;
-    notify('¡Sesión completada!', 'work');
+    playSound('work');
+    notify('¡Sesión completada!');
   }
 
-  /* ══════════════════════════════════════
-     TICK
-  ══════════════════════════════════════ */
+  /* ── TICK ── */
   function tick() {
     if (remainSecs <= 0) {
-      notify(currentPhase === 'work' ? '¡Tiempo de trabajo terminado!' : '¡Descanso terminado!',
-             currentPhase === 'work' ? 'work' : 'rest');
+      playSound(currentPhase);
+      notify(currentPhase === 'work' ? '¡Tiempo de trabajo terminado!' : '¡Descanso terminado!');
       nextPhase();
       return;
     }
@@ -1046,75 +904,56 @@
   }
 
   function updatePhaseLabel() {
-    const phase = currentPhase === 'work' ? 'Trabajo' : 'Descanso';
-    phaseLabel.textContent = `${phase} · Ciclo ${currentCycle}`;
+    phaseLabel.textContent = `${currentPhase === 'work' ? 'Trabajo' : 'Descanso'} · Ciclo ${currentCycle}`;
   }
 
-  /* ══════════════════════════════════════
-     PLAY / PAUSE
-  ══════════════════════════════════════ */
-  document.getElementById('btn-play').addEventListener('click', togglePlay);
-
-  function togglePlay() {
+  /* ── PLAY / PAUSE ── */
+  document.getElementById('btn-play').addEventListener('click', () => {
     if (editing) commitEdit();
     running = !running;
     playIcon.style.display  = running ? 'none'  : 'block';
     pauseIcon.style.display = running ? 'block' : 'none';
     if (running) intervalId = setInterval(tick, 1000);
     else clearInterval(intervalId);
-  }
-
-  /* ══════════════════════════════════════
-     RESTART / SKIP
-  ══════════════════════════════════════ */
-  document.getElementById('btn-restart').addEventListener('click', () => {
-    if (editing) cancelEdit();
-    clearInterval(intervalId);
-    running = false;
-    playIcon.style.display  = 'block';
-    pauseIcon.style.display = 'none';
-    remainSecs = phaseSecs;
-    totalSecs  = phaseSecs;
-    updateDisplay();
-    updateBar(1);
   });
 
+  /* ── RESTART ── */
+  document.getElementById('btn-restart').addEventListener('click', () => {
+    if (editing) cancelEdit();
+    clearInterval(intervalId); running = false;
+    playIcon.style.display = 'block'; pauseIcon.style.display = 'none';
+    remainSecs = phaseSecs; totalSecs = phaseSecs;
+    updateDisplay(); updateBar(1);
+  });
+
+  /* ── SKIP ── */
   document.getElementById('btn-skip').addEventListener('click', () => {
     if (editing) cancelEdit();
-    clearInterval(intervalId);
-    remainSecs = 0;
+    clearInterval(intervalId); remainSecs = 0;
     nextPhase();
     if (running) intervalId = setInterval(tick, 1000);
   });
 
-  /* ══════════════════════════════════════
-     QUICK ADJUST
-  ══════════════════════════════════════ */
+  /* ── QUICK ADJUST ── */
   document.querySelectorAll('.qa-btn').forEach(btn => {
     btn.addEventListener('click', () => {
       if (editing) cancelEdit();
       const delta = parseInt(btn.dataset.adjust);
       remainSecs = Math.max(1, Math.min(5999, remainSecs + delta));
       if (remainSecs > totalSecs) totalSecs = remainSecs;
-      updateDisplay();
-      updateBar(remainSecs / totalSecs);
+      updateDisplay(); updateBar(remainSecs / totalSecs);
       showToast((delta > 0 ? '+' : '') + (delta / 60) + ' min');
     });
   });
 
-  /* ══════════════════════════════════════
-     INLINE EDIT (timer)
-  ══════════════════════════════════════ */
-  timeDisplay.addEventListener('click', startEdit);
-
-  function startEdit() {
+  /* ── INLINE EDIT ── */
+  timeDisplay.addEventListener('click', () => {
     editing = true;
     timeDisplay.style.display = 'none';
     timeInput.style.display   = 'block';
     timeInput.value = fmtTime(remainSecs);
-    timeInput.focus();
-    timeInput.select();
-  }
+    timeInput.focus(); timeInput.select();
+  });
 
   function commitEdit() {
     const secs = parseTimeInput(timeInput.value);
@@ -1123,33 +962,29 @@
       if (remainSecs > totalSecs) totalSecs = remainSecs;
       updateBar(remainSecs / totalSecs);
     }
-    cancelEdit();
-    updateDisplay();
+    cancelEdit(); updateDisplay();
   }
 
   function cancelEdit() {
     editing = false;
-    timeInput.style.display  = 'none';
+    timeInput.style.display   = 'none';
     timeDisplay.style.display = 'block';
   }
 
   timeInput.addEventListener('keydown', e => {
-    if (e.key === 'Enter')  commitEdit();
+    if (e.key === 'Enter') commitEdit();
     if (e.key === 'Escape') cancelEdit();
   });
   timeInput.addEventListener('blur', commitEdit);
 
-  /* ══════════════════════════════════════
-     DONE
-  ══════════════════════════════════════ */
+  /* ── DONE BUTTON ── */
   document.getElementById('done-btn').addEventListener('click', () => {
     doneScreen.style.display  = 'none';
+    doneSub.textContent       = '';
     setupScreen.style.display = 'flex';
   });
 
-  /* ══════════════════════════════════════
-     TOAST
-  ══════════════════════════════════════ */
+  /* ── TOAST ── */
   let toastTimer;
   function showToast(msg) {
     clearTimeout(toastTimer);
@@ -1158,56 +993,8 @@
     toastTimer = setTimeout(() => toast.classList.remove('show'), 2200);
   }
 
-  /* ══════════════════════════════════════
-     SOUND — Web Audio API beep
-  ══════════════════════════════════════ */
-  function playBeep(type) {
-    try {
-      const ctx = new (window.AudioContext || window.webkitAudioContext)();
-      const master = ctx.createGain();
-      master.gain.setValueAtTime(0, ctx.currentTime);
-      master.connect(ctx.destination);
-
-      if (type === 'work') {
-        // Three short ascending tones — "time's up, go rest"
-        [[440, 0.00], [554, 0.18], [659, 0.36]].forEach(([freq, delay]) => {
-          const osc = ctx.createOscillator();
-          const env = ctx.createGain();
-          osc.type = 'sine';
-          osc.frequency.value = freq;
-          env.gain.setValueAtTime(0, ctx.currentTime + delay);
-          env.gain.linearRampToValueAtTime(0.28, ctx.currentTime + delay + 0.02);
-          env.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + delay + 0.35);
-          osc.connect(env);
-          env.connect(master);
-          osc.start(ctx.currentTime + delay);
-          osc.stop(ctx.currentTime + delay + 0.4);
-        });
-        setTimeout(() => ctx.close(), 1200);
-      } else {
-        // One soft low tone — "break's over"
-        const osc = ctx.createOscillator();
-        const env = ctx.createGain();
-        osc.type = 'sine';
-        osc.frequency.setValueAtTime(330, ctx.currentTime);
-        osc.frequency.linearRampToValueAtTime(440, ctx.currentTime + 0.3);
-        env.gain.setValueAtTime(0, ctx.currentTime);
-        env.gain.linearRampToValueAtTime(0.30, ctx.currentTime + 0.03);
-        env.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.7);
-        osc.connect(env);
-        env.connect(master);
-        osc.start(ctx.currentTime);
-        osc.stop(ctx.currentTime + 0.8);
-        setTimeout(() => ctx.close(), 1000);
-      }
-    } catch(e) {}
-  }
-
-  /* ══════════════════════════════════════
-     NOTIFICATIONS
-  ══════════════════════════════════════ */
-  function notify(msg, soundType) {
-    playBeep(soundType || 'work');
+  /* ── BROWSER NOTIFICATIONS ── */
+  function notify(msg) {
     if ('Notification' in window && Notification.permission === 'granted') {
       new Notification('Pomodoro', { body: msg });
     } else if ('Notification' in window && Notification.permission !== 'denied') {
@@ -1217,20 +1004,7 @@
     }
   }
 
-  /* ══════════════════════════════════════
-     THEME BAR — touch toggle for mobile
-  ══════════════════════════════════════ */
-  const themeBar = document.getElementById('theme-bar');
-  themeBar.addEventListener('touchstart', e => {
-    if (!e.target.classList.contains('theme-dot')) {
-      themeBar.classList.toggle('open');
-      e.preventDefault();
-    }
-  }, { passive: false });
-
-  /* ══════════════════════════════════════
-     INIT
-  ══════════════════════════════════════ */
+  /* ── INIT ── */
   setupScreen.style.display = 'flex';
 </script>
 </body>
